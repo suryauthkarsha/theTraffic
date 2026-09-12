@@ -18,6 +18,7 @@ const MethodologyPage = lazy(() => import("./pages/MethodologyPage"));
 const SupportPage = lazy(() => import("./pages/SupportPage"));
 const GrievancePage = lazy(() => import("./pages/GrievancePage"));
 const GrievancesPage = lazy(() => import("./pages/GrievancesPage"));
+const HelmetPage = lazy(() => import("./pages/HelmetPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } } });
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="/support" element={<SupportPage />} />
               <Route path="/grievance" element={<GrievancePage />} />
               <Route path="/grievances" element={<GrievancesPage />} />
+              <Route path="/helmet" element={<HelmetPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

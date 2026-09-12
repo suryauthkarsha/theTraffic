@@ -49,6 +49,8 @@ export const SITE_KEYWORDS: readonly string[] = [
   "road grievance Bengaluru",
   "civic issues Bangalore",
   "account-free grievance board",
+  "ISI helmet campaign Bengaluru",
+  "bike taxi pillion helmet",
   "OpenStreetMap Bengaluru",
 ];
 
@@ -78,6 +80,7 @@ const ROUTES: { match: (p: string) => boolean; canonical: (p: string) => string;
   { match: (p) => p === "/support", canonical: () => "/support", title: () => `Support · ${BRAND_NAME} — FAQ, status, report a problem`, description: () => `Questions about ${BRAND_NAME} answered, live system status, and a way to report a problem with the Bengaluru map or a record — plus the grievance board for the road itself.` },
   { match: (p) => p === "/grievances", canonical: () => "/grievances", title: () => `Bengaluru road grievances · potholes, footpaths, water, crossings`, description: () => `An account-free public board of Bengaluru road problems, with user-submitted words, photos and precise places shown newest first.` },
   { match: (p) => p === "/grievance", canonical: () => "/grievance", title: () => `File a Bengaluru road grievance without an account · ${BRAND_NAME}`, description: () => `Post a Bengaluru road problem with a photo or place and no account. Words, visible pixels, coordinates and filing time may identify someone.` },
+  { match: (p) => p === "/helmet", canonical: () => "/helmet", title: () => `ISI helmets for bike-taxi pillion riders in Bengaluru · ${BRAND_NAME} campaign`, description: () => `A campaign to put an ISI-certified helmet on every bike-taxi passenger in Bengaluru: helmets bought in bulk and handed to Uber Moto and Rapido drivers as the pillion's helmet. Give by UPI — everything goes to the helmets.` },
 ];
 
 /** The metadata for a pathname (query and hash stripped) and the screen's own title, when it has one. Pure. */

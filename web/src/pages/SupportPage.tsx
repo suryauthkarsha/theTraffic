@@ -1,4 +1,4 @@
-import { ArrowRight, Check, ClipboardCopy, Instagram, LifeBuoy, Linkedin, Mail, Megaphone } from "lucide-react";
+import { ArrowRight, Check, ClipboardCopy, HardHat, Instagram, LifeBuoy, Linkedin, Mail, Megaphone } from "lucide-react";
 import { useEffect, useId, useMemo, useState, type ComponentType } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 
@@ -127,6 +127,19 @@ export default function SupportPage() {
                   File one
                 </Link>
               </div>
+            </section>
+
+            <section className="panel flex flex-wrap items-center gap-3 p-4" aria-labelledby={`${id}-helmet`}>
+              <HardHat size={17} className="shrink-0 text-gw-orange" aria-hidden />
+              <div className="min-w-0 flex-1">
+                <h2 id={`${id}-helmet`} className="text-[15px] font-semibold text-gw-text">
+                  Helmet campaign
+                </h2>
+                <p className="mt-0.5 text-[13px] text-gw-secondary">ISI-certified helmets for Bengaluru's bike-taxi passengers, handed to the drivers — give by UPI.</p>
+              </div>
+              <Link to="/helmet" className="btn-secondary h-11 text-[13px]">
+                The campaign <ArrowRight size={14} className="ml-1.5" aria-hidden />
+              </Link>
             </section>
 
             <section className="panel p-5" aria-labelledby={`${id}-faq`}>

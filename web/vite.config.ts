@@ -173,6 +173,7 @@ const SITEMAP_ROUTES: { path: string; changefreq: "daily" | "weekly" | "monthly"
   { path: "/signals", changefreq: "weekly", priority: "0.9" },
   { path: "/grievances", changefreq: "daily", priority: "0.9" },
   { path: "/grievance", changefreq: "monthly", priority: "0.7" },
+  { path: "/helmet", changefreq: "monthly", priority: "0.8" },
   { path: "/surveillance", changefreq: "weekly", priority: "0.8" },
   { path: "/research", changefreq: "weekly", priority: "0.6" },
   { path: "/methodology", changefreq: "monthly", priority: "0.5" },

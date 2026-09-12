@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Cctv, FlaskConical, LifeBuoy, Map as MapIcon, Megaphone } from "lucide-react";
+import { ArrowRight, BookOpen, Cctv, FlaskConical, HardHat, LifeBuoy, Map as MapIcon, Megaphone } from "lucide-react";
 import type { ComponentType } from "react";
 import { Link } from "react-router-dom";
 
@@ -248,6 +248,25 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Campaign */}
+        <section id="campaign" className="border-t border-gw-border" aria-labelledby="campaign-title">
+          <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:py-20">
+            <h2 id="campaign-title" className={h2}>
+              <b>05</b> · campaign
+            </h2>
+            <Link to="/helmet" className="panel group mt-6 flex flex-col gap-4 p-5 transition-colors hover:bg-gw-hover sm:flex-row sm:items-center">
+              <HardHat size={22} className="shrink-0 text-gw-orange" aria-hidden />
+              <div className="min-w-0 flex-1">
+                <h3 className="text-[19px] font-semibold text-gw-text">A certified helmet for every pillion</h3>
+                <p className="mt-1 text-[13.5px] leading-relaxed text-gw-secondary">ISI-certified helmets for Bengaluru's bike-taxi passengers, handed to Uber Moto and Rapido drivers. Give by UPI — everything goes to the helmets.</p>
+              </div>
+              <span className="btn-primary h-11 shrink-0 px-5 text-[14px]">
+                Give <ArrowRight size={15} className="ml-1.5" aria-hidden />
+              </span>
+            </Link>
+          </div>
+        </section>
       </main>
 
       <footer className="relative border-t border-gw-border px-5 py-6 text-[12px] text-gw-muted sm:px-8">
@@ -264,6 +283,9 @@ const LandingPage = () => {
             </Link>
             <Link to="/grievances" className="hover:text-gw-text">
               Grievances
+            </Link>
+            <Link to="/helmet" className="hover:text-gw-text">
+              Helmet campaign
             </Link>
           </nav>
           <span className="mono">© OpenStreetMap contributors (ODbL) · OpenFreeMap · Esri</span>
