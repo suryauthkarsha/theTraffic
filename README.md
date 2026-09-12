@@ -7,7 +7,7 @@
 <p align="center"><strong>Know Bengaluru's roads, junction by junction.</strong></p>
 
 <p align="center">
-  <a href="https://greenwave-bengaluru.rork.app">Live site</a> ·
+  <a href="https://www.thetraffic.in">Live site</a> ·
   <a href="docs/METHODOLOGY.md">Methodology</a> ·
   <a href="CONTRIBUTING.md">Contributing</a> ·
   <a href="docs/PRIVACY.md">Privacy</a>

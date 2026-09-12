@@ -17,7 +17,7 @@ export const SECURITY_HEADERS: Readonly<Record<string, string>> = {
  * `GRIEVANCE_ALLOWED_ORIGINS` (space or comma separated). Multi-tenant suffix wildcards are rejected.
  * Local development servers are always allowed.
  */
-export const DEFAULT_ORIGINS = new Set(["https://greenwave-bengaluru.rork.app"]);
+export const DEFAULT_ORIGINS = new Set(["https://greenwave-bengaluru.rork.app", "https://www.thetraffic.in"]);
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]", "[::]"]);
 
 /** Whether a browser origin may read and write the board. A request without an origin is not a browser's cross-site call. */

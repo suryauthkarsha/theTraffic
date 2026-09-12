@@ -6,7 +6,7 @@ authors:
   - given-names: Surya
     family-names: Uthkarsha
 repository-code: "https://github.com/suryauthkarsha/theTraffic"
-url: "https://greenwave-bengaluru.rork.app"
+url: "https://www.thetraffic.in"
 license: MIT
 abstract: "An open civic-data explorer for Bengaluru traffic signals, published timing plans, community-mapped surveillance infrastructure, and account-free public road grievances."
 keywords:

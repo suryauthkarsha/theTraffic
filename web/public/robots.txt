@@ -4,4 +4,4 @@ Allow: /
 Disallow: /grievance?
 Disallow: /support?
 
-Sitemap: https://greenwave-bengaluru.rork.app/sitemap.xml
+Sitemap: https://www.thetraffic.in/sitemap.xml

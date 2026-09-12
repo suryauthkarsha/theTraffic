@@ -9,7 +9,7 @@ import { BRAND_CITY, BRAND_NAME } from "@/lib/system/brand";
  * title, description and canonical address. Every function here is pure and tested; the DOM write is
  * the one small function at the end.
  */
-export const DEFAULT_SITE_URL = "https://greenwave-bengaluru.rork.app";
+export const DEFAULT_SITE_URL = "https://www.thetraffic.in";
 
 /** The public origin, from `VITE_SITE_URL` when it names an https origin; otherwise the project default. */
 export function siteUrl(configured: string | undefined = import.meta.env.VITE_SITE_URL): string {

@@ -161,7 +161,7 @@ function envHygiene(env: Record<string, string>): Plugin {
 }
 
 /** The public origin for the sitemap: `VITE_SITE_URL` when it is an https origin, else the project's host. */
-const DEFAULT_SITE_URL = "https://greenwave-bengaluru.rork.app";
+const DEFAULT_SITE_URL = "https://www.thetraffic.in";
 function siteOrigin(env: Record<string, string>): string {
   const o = originOf(env.VITE_SITE_URL);
   return o && o.startsWith("https://") ? o : DEFAULT_SITE_URL;

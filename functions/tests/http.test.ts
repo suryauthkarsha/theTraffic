@@ -9,6 +9,7 @@ import { bearerToken, corsHeaders, errorResponse, jpegResponse, jsonResponse, or
 describe("origins", () => {
   test("grants the exact public site and local dev servers, never a multi-tenant sibling or public http", () => {
     expect(originAllowed("https://greenwave-bengaluru.rork.app", undefined)).toBe(true);
+    expect(originAllowed("https://www.thetraffic.in", undefined)).toBe(true);
     expect(originAllowed("https://another-project.rork.app", undefined)).toBe(false);
     expect(originAllowed("https://thetraffic-git-main-user.vercel.app", undefined)).toBe(false);
     expect(originAllowed("https://editor-preview.rork.live", undefined)).toBe(false);
