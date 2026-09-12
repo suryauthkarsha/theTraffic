@@ -1,0 +1,15 @@
+# Response headers for hosts that honour a `_headers` file (Cloudflare Pages, Netlify). Rork's static
+# host does not read it today (docs/DEPLOYMENT.md, "Security headers"), so these are a no-op there and
+# the Content Security Policy travels as a <meta> tag instead. Vercel does not read it either: the same
+# set lives in web/vercel.json (security.test.ts keeps the two identical). Nothing here depends on the
+# host: a `frame-ancestors` / X-Frame-Options rule is absent because the Rork editor previews the site
+# inside a frame. Vercel adds both rules, and the app separately disables grievance posting and
+# moderator actions whenever it detects an embedded frame. Geolocation is allowed for this origin
+# alone: the Grievance page asks for the device position at the visitor's press (2026-09-11). The camera
+# stays off — photos arrive through the operating system's picker, never a live camera stream.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin

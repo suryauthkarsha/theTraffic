@@ -1,0 +1,7 @@
+# theTraffic. · Bengaluru — every page is public; nothing here needs hiding from a crawler.
+User-agent: *
+Allow: /
+Disallow: /grievance?
+Disallow: /support?
+
+Sitemap: https://greenwave-bengaluru.rork.app/sitemap.xml

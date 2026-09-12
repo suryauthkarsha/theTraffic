@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "theTraffic."
+message: "If you use this software or its original research methods, please cite it using this metadata and preserve the dataset-specific attributions."
+type: software
+authors:
+  - given-names: Surya
+    family-names: Uthkarsha
+repository-code: "https://github.com/suryauthkarsha/theTraffic"
+url: "https://greenwave-bengaluru.rork.app"
+license: MIT
+abstract: "An open civic-data explorer for Bengaluru traffic signals, published timing plans, community-mapped surveillance infrastructure, and account-free public road grievances."
+keywords:
+  - Bengaluru
+  - civic technology
+  - traffic signals
+  - open data
+  - OpenStreetMap

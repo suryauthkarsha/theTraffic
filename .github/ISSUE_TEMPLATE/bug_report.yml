@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a reproducible problem in the site, Worker, scripts, or documentation
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report a problem. Do not include secrets or personal location history.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Web interface
+        - Signal data or prediction
+        - Surveillance data
+        - Grievance board or Worker
+        - Data pipeline
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or record URL
+      placeholder: https://...
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, device size, and commit or deployment if known.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues.
+          required: true
+        - label: This report does not contain a credential, private contact detail, or personal movement trace.
+          required: true

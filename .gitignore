@@ -1,0 +1,35 @@
+node_modules
+.expo
+
+# Secrets: every env file except the committed template; wrangler's local secrets.
+.env
+.env.*
+!.env.example
+*.local
+.dev.vars
+.dev.vars.*
+
+# Rork workspace state. The agent transcripts under .rork/history record tool output verbatim — they
+# have carried .env contents before — so nothing under .rork is committed except the design contract.
+# (Files git already tracks stay tracked until `git rm -r --cached .rork/history` — docs/DEPLOYMENT.md.)
+.rork/*
+!.rork/DESIGN.md
+
+# Locally downloaded or extracted source documents. The public repository keeps source URLs,
+# hashes, structured factual outputs and provenance, not full third-party report text.
+/data/raw/opencity/text/
+/data/raw/historical/*.txt
+/data/raw/live/*.txt
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Cloudflare Functions
+functions/node_modules
+functions/.wrangler
+functions/dist
+!functions/package.json
+
+# Vercel CLI project link (`vercel link` writes project and org ids here; web/vercel.json IS committed)
+.vercel

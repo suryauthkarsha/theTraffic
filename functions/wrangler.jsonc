@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "thetraffic-grievances",
+  "main": "index.ts",
+  "compatibility_date": "2026-09-12",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "GRIEVANCE_BOARD",
+        "class_name": "GrievanceBoard"
+      },
+      {
+        "name": "GRIEVANCE_PHOTOS",
+        "class_name": "GrievancePhotos"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["GrievanceBoard", "GrievancePhotos"]
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

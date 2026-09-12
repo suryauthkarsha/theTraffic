@@ -1,0 +1,1624 @@
+{
+"HOSUR LASKAR RD and NEW MICO RD, Bengaluru": null,
+"ADUGODI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9440179,
+"lon": 77.6075681,
+"label": "Adugodi Police Station Junction",
+"osm": "junction=yes"
+},
+"AISHWARYA JUNCTION (7th Mn. 1st Block Koramangala) junction, Bengaluru": null,
+"AISHWARYA JUNCTION (7th Mn. 1st Block Koramangala), Bengaluru": null,
+"BDA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9977937,
+"lon": 77.5843929,
+"label": "BDA Junction",
+"osm": "junction=yes"
+},
+"SARJAPURA RD and KORAMANGALA, Bengaluru": {
+"provider": "photon",
+"lat": 12.9280827,
+"lon": 77.6373095,
+"label": "Essence Unisex Salon And Spa",
+"osm": "shop=beauty"
+},
+"NGV REAR GATE junction, Bengaluru": null,
+"NGV REAR GATE, Bengaluru": {
+"provider": "photon",
+"lat": 12.9453816,
+"lon": 77.6233993,
+"label": "NGV Grounds",
+"osm": "landuse=recreation_ground"
+},
+"SONY WORLD (KORAMANGALA 80FT. RD) junction, Bengaluru": null,
+"SONY WORLD (KORAMANGALA 80FT. RD), Bengaluru": null,
+"VATHUR RD and OUTER RING RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9062193,
+"lon": 77.580682,
+"label": "Green City Hospital, Bengaluru Urban",
+"osm": "amenity=hospital"
+},
+"YEMLUR RD and OLD AIRPORT RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9485945,
+"lon": 77.6827666,
+"label": "Sampradaya - Fast Food, Fresh Fruits And Vegetables",
+"osm": "amenity=restaurant"
+},
+"OLD AIRPORT RD and SURJANDAS RD, Bengaluru": null,
+"KUVEMPU CIRCLE JUNCTION - HAL MAIN GATE junction, Bengaluru": null,
+"KUVEMPU CIRCLE JUNCTION - HAL MAIN GATE, Bengaluru": null,
+"MANIPAL HOSPITAL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.959791,
+"lon": 77.6491156,
+"label": "Manipal Hospital Junction",
+"osm": "junction=yes"
+},
+"OLD AIRPORT RD and WIND, Bengaluru": null,
+"ISRO JUNCTION - AIRPORT ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.959791,
+"lon": 77.6491156,
+"label": "Manipal Hospital Junction",
+"osm": "junction=yes"
+},
+"SILK BOARD RD and MARATHALLI RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.8902466,
+"lon": 77.6049049,
+"label": "Bangalore Water Supply and Sewage Board (BWSSB)",
+"osm": "office=government"
+},
+"PALMGROOVE RD and VICTORIA RD, Bengaluru": null,
+"PALMGROOVE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"RICHMOND RD and RRMR ROAD, Bengaluru": null,
+"RICHMOND CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.966229,
+"lon": 77.6068067,
+"label": "Shoolay Circle",
+"osm": "junction=yes"
+},
+"CAMPBELL RD and VICTORIA RD, Bengaluru": null,
+"MOTHER THERESA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9666437,
+"lon": 77.6087165,
+"label": "Mother Teresa Junction",
+"osm": "junction=yes"
+},
+"SHANTINAGAR MAIN RD and LANG FORD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9485945,
+"lon": 77.6827666,
+"label": "Sampradaya - Fast Food, Fresh Fruits And Vegetables",
+"osm": "amenity=restaurant"
+},
+"VICTORIA RD and PALMGROOVE RD, Bengaluru": null,
+"LOWER AGARAM JUNCTION (INDIA GARAGE) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9653868,
+"lon": 77.6177039,
+"label": "ASC Junction",
+"osm": "junction=yes"
+},
+"M.G.ROAD and COMMISSIONARATE RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9352523,
+"lon": 77.6008716,
+"label": "Commissionarate of Employment and Training",
+"osm": "office=government"
+},
+"VICTORIA RD and CAMPBELL RD, Bengaluru": null,
+"D\u2019SOUZA CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9675529,
+"lon": 77.6109517,
+"label": "D'Souza Circle",
+"osm": "highway=bus_stop"
+},
+"HOSUR RD and LEONARD LANE, Bengaluru": null,
+"JOHNSON MARKET junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.96577,
+"lon": 77.6069328,
+"label": "Johnson Market",
+"osm": "highway=bus_stop"
+},
+"RESIDENCY RD and ST.MARKS RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0321589,
+"lon": 77.6081812,
+"label": "BSR Residency",
+"osm": "building=yes"
+},
+"HOSUR RD and SHANTHINAGR, Bengaluru": {
+"provider": "photon",
+"lat": 12.9531008,
+"lon": 77.6051527,
+"label": "Anepalya",
+"osm": "highway=bus_stop"
+},
+"NEELASANDRA RD and LOWER AGRAM RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9668354,
+"lon": 77.6369007,
+"label": "Lavonne Academy of Baking Science and Pastry Arts",
+"osm": "amenity=college"
+},
+"CAMPBELL ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"HOSUR RD and BANNERUGHATTA RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9352523,
+"lon": 77.6008716,
+"label": "Commissionarate of Employment and Training",
+"osm": "office=government"
+},
+"ARTS & CRAFT CIRCLE junction, Bengaluru": null,
+"ARTS & CRAFT CIRCLE, Bengaluru": {
+"provider": "photon",
+"lat": 12.9306657,
+"lon": 77.5840175,
+"label": "Prachin Arts & Craft",
+"osm": "shop=antiques"
+},
+"BDA COMPLEX and TYAGARAJNAGAR RD, Bengaluru": null,
+"ARVIND SUPER BAZAAR junction, Bengaluru": null,
+"ARVIND SUPER BAZAAR, Bengaluru": {
+"provider": "photon",
+"lat": 12.9560845,
+"lon": 77.7168358,
+"label": "City Super Bazaar",
+"osm": "shop=supermarket"
+},
+"BDA and THYAGARAJNAGAR RD, Bengaluru": null,
+"ATTIMOBBE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"KAMAKYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9306844,
+"lon": 77.5430415,
+"label": "Hosakerehalli Junction",
+"osm": "highway=bus_stop"
+},
+"RING ROAD and KATRIGUPPE RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9274553,
+"lon": 77.5516293,
+"label": "Ring Road Hospital",
+"osm": "amenity=hospital"
+},
+"K.R. ROAD JUNCTION (NEAR JSS) junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0005461,
+"lon": 77.6754561,
+"label": "Krishnarajapuram",
+"osm": "railway=station"
+},
+"K.R. RD and TYAGARAJA NAGAR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9002999,
+"lon": 77.5860464,
+"label": "WE Fitness, Health and Wellness Center",
+"osm": "leisure=sports_centre"
+},
+"JBS NURSING HOME junction, Bengaluru": null,
+"JBS NURSING HOME, Bengaluru": {
+"provider": "photon",
+"lat": 13.0138496,
+"lon": 77.5209944,
+"label": "Renuka Nursing Home, Bengaluru Urban",
+"osm": "amenity=clinic"
+},
+"JSS junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"OLD AIRPORT RD and DOMLUR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9612682,
+"lon": 77.6375507,
+"label": "Sri Chamudeshwari Sports Link And Fitness",
+"osm": "shop=sports"
+},
+"ITTAMADU MAIN RD and NEAR NCERT, Bengaluru": null,
+"ITTAMADU junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9253851,
+"lon": 77.5501586,
+"label": "Ittamadu-Kamakya Flyover (Proposed)",
+"osm": "highway=proposed"
+},
+"KANAKAPURA MAIN RD and UTTARAHALLLI, Bengaluru": null,
+"BANASHANKARI BUS STAND junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9515758,
+"lon": 77.6213248,
+"label": "Ravi Tent",
+"osm": "highway=bus_stop"
+},
+"RING ROAD and PADMANABHANAGAR, Bengaluru": {
+"provider": "photon",
+"lat": 12.8481663,
+"lon": 77.6921045,
+"label": "Bengaluru Business Corridor",
+"osm": "highway=proposed"
+},
+"VIDTAPETTA CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9899856,
+"lon": 77.5719656,
+"label": "Subhash Nagar Junction",
+"osm": "junction=yes"
+},
+"YEDIYUR CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9309078,
+"lon": 77.5761739,
+"label": "Yediyuru Circle",
+"osm": "highway=traffic_signals"
+},
+"R.V. TEACHER COLLEGE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9431162,
+"lon": 77.5807836,
+"label": "R V Teachers College",
+"osm": "amenity=college"
+},
+"VANI VILAS ROAD & SHANKARMUTT ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0092653,
+"lon": 77.5621798,
+"label": "Vani Vilas",
+"osm": "amenity=school"
+},
+"LALBAGH WEST GATE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.948281,
+"lon": 77.5799733,
+"label": "Lalbagh West Gate",
+"osm": "junction=yes"
+},
+"KR MARKET and BASANAVAGUDI PS, Bengaluru": null,
+"NATIONAL COLLEGE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9505266,
+"lon": 77.5736898,
+"label": "National College",
+"osm": "railway=station"
+},
+"BHARATHI NURSING HOME JUNCTION (K.R. ROAD) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9366323,
+"lon": 77.5740431,
+"label": "Bharathi Nursing Home",
+"osm": "amenity=clinic"
+},
+"CHAMARAJPET 5TH MAIN junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9569234,
+"lon": 77.5598967,
+"label": "Chamrajpet 5th Main Road",
+"osm": "highway=primary"
+},
+"80'FT ROAD and BANASWADI MAIN RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0135054,
+"lon": 77.6617822,
+"label": "Vanity Salon Slimming And Spa",
+"osm": "shop=beauty"
+},
+"CMR ROAD and KAMMANAHALLI MAIN RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0262121,
+"lon": 77.636976,
+"label": "Kammanahalli Main Road",
+"osm": "highway=secondary"
+},
+"HENNUR MAIN RD and ORR, Bengaluru": {
+"provider": "photon",
+"lat": 12.9444492,
+"lon": 77.6784033,
+"label": "Basaveshwara Glass And Plywoods",
+"osm": "shop=hardware"
+},
+"HRBR 80' FT RD and ORR, Bengaluru": {
+"provider": "photon",
+"lat": 13.0233844,
+"lon": 77.6374387,
+"label": "Malabar Gold and Diamonds",
+"osm": "shop=jewelry"
+},
+"KAMMANAHALLI RD and ORR, Bengaluru": {
+"provider": "photon",
+"lat": 13.0155509,
+"lon": 77.6323859,
+"label": "Parker Spa And Salon",
+"osm": "shop=beauty"
+},
+"TIMKIN junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"VEERASANDRA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.8395869,
+"lon": 77.672764,
+"label": "Veerasandra",
+"osm": "boundary=administrative"
+},
+"ELECTRONIC CITY GATE - 2 junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.8418715,
+"lon": 77.6648299,
+"label": "RS Junction",
+"osm": "junction=yes"
+},
+"NAGANATHAPURA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.8755609,
+"lon": 77.6705991,
+"label": "Udupi Juice Junction",
+"osm": "amenity=fast_food"
+},
+"WIPRO junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"HENNUR RD and DAVIS RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0293004,
+"lon": 77.6342802,
+"label": "Banu Chicken and Fish Traders",
+"osm": "shop=seafood"
+},
+"DODDABALLAPURA CROSS (VIJIPURA CROSS & BYPASS-DODDABALLAPURA) junction, Bengaluru": null,
+"DODDABALLAPURA CROSS (VIJIPURA CROSS & BYPASS-DODDABALLAPURA), Bengaluru": {
+"provider": "photon",
+"lat": 13.1755668,
+"lon": 77.4411673,
+"label": "Doddakukkanahalli Cross",
+"osm": "highway=bus_stop"
+},
+"NANDI CROSS (RANI CROSS) junction, Bengaluru": null,
+"NANDI CROSS (RANI CROSS), Bengaluru": {
+"provider": "photon",
+"lat": 12.9926212,
+"lon": 77.5903675,
+"label": "Sri Nandi Rajguru Ravi Nilaya",
+"osm": "building=apartments"
+},
+"AIRPORT RD and VIJIPURA RD, Bengaluru": null,
+"VIJIPURA CROSS-DEVANAHALLI CROSS junction, Bengaluru": null,
+"VIJIPURA CROSS-DEVANAHALLI CROSS, Bengaluru": {
+"provider": "photon",
+"lat": 13.0878915,
+"lon": 77.8076763,
+"label": "Sonnadevanahalli Cross",
+"osm": "highway=bus_stop"
+},
+"BHEL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"INFANTRY RD and INDIAN EXPRESS RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9586423,
+"lon": 77.5601646,
+"label": "SK Global Express and Narayana Transport",
+"osm": "office=logistics"
+},
+"DR.AMBEDKAR RD and OLD POST OFFICE RD, Bengaluru": null,
+"GOPAL GOWDA CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9218457,
+"lon": 77.5601994,
+"label": "Deve Gowda Petrol Bunk Junction",
+"osm": "junction=yes"
+},
+"KASTURBA RD and CUBBON PARK RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9809859,
+"lon": 77.596867,
+"label": "Cubbon Park Metro Entrance",
+"osm": "building=yes"
+},
+"AIRPORT ROAD and NH7, Bengaluru": {
+"provider": "photon",
+"lat": 12.961351,
+"lon": 77.6348885,
+"label": "Sri Chamudeshwari Sports Link And Fitness",
+"osm": "shop=sports"
+},
+"BRIYAND CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9899856,
+"lon": 77.5719656,
+"label": "Subhash Nagar Junction",
+"osm": "junction=yes"
+},
+"DR. TCM ROYAN ROAD JUNCTION-NEAR AMBEDKAR STATUE junction, Bengaluru": null,
+"DR. TCM ROYAN ROAD JUNCTION-NEAR AMBEDKAR STATUE, Bengaluru": null,
+"BANGALORE BODY BUILDERS junction, Bengaluru": null,
+"BANGALORE BODY BUILDERS, Bengaluru": {
+"provider": "photon",
+"lat": 12.9716298,
+"lon": 77.5971182,
+"label": "Farah Builders Private Limited",
+"osm": "office=company"
+},
+"MEDICAL COLLEGE CIRCLE junction, Bengaluru": null,
+"MEDICAL COLLEGE CIRCLE, Bengaluru": {
+"provider": "photon",
+"lat": 12.9608798,
+"lon": 77.5694699,
+"label": "Bangalore Medical College Hostel & Staff Quarters",
+"osm": "landuse=residential"
+},
+"SIRSI CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9604851,
+"lon": 77.5568622,
+"label": "Sirsi Circle",
+"osm": "highway=bus_stop"
+},
+"CHIKKAJALA junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.1679234,
+"lon": 77.6372834,
+"label": "Chikkajala",
+"osm": "boundary=administrative"
+},
+"RAJARAJESHWARI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9363294,
+"lon": 77.5184637,
+"label": "Rajarajeshwari Nagar Arch Junction",
+"osm": "junction=yes"
+},
+"SATELLITE BUS STAND junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9932927,
+"lon": 77.654499,
+"label": "ITD Casting Yard",
+"osm": "landuse=industrial"
+},
+"MYSORE ROAD NEAR MADHU PETROL BUNK junction, Bengaluru": null,
+"MYSORE ROAD NEAR MADHU PETROL BUNK, Bengaluru": {
+"provider": "photon",
+"lat": 12.912772,
+"lon": 77.4856666,
+"label": "Madhu Petrol / Gas Station",
+"osm": "amenity=fuel"
+},
+"MYSORE ROAD - RING ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9043928,
+"lon": 77.4704723,
+"label": "Nice Road Junction",
+"osm": "highway=bus_stop"
+},
+"HOYSALA CIRCLE KENGERI UPANAGAR junction, Bengaluru": null,
+"HOYSALA CIRCLE KENGERI UPANAGAR, Bengaluru": {
+"provider": "photon",
+"lat": 12.9246881,
+"lon": 77.4852147,
+"label": "Hoysala Circle",
+"osm": "highway=traffic_signals"
+},
+"KIMCO JUNCTION (MYSORE ROAD) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9043928,
+"lon": 77.4704723,
+"label": "Nice Road Junction",
+"osm": "highway=bus_stop"
+},
+"ULSOOR ROAD and DOMLUR ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9612682,
+"lon": 77.6375507,
+"label": "Sri Chamudeshwari Sports Link And Fitness",
+"osm": "shop=sports"
+},
+"ARBINDO CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9899856,
+"lon": 77.5719656,
+"label": "Subhash Nagar Junction",
+"osm": "junction=yes"
+},
+"VATAL NAGRAJ RD and KRISHNA FLOOR, Bengaluru": null,
+"PLATFORM ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0005461,
+"lon": 77.6754561,
+"label": "Krishnarajapuram",
+"osm": "railway=station"
+},
+"K.K.ROAD and RACE COURSE ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9826766,
+"lon": 77.5855749,
+"label": "Department of Geology And Mines",
+"osm": "office=government"
+},
+"LINK ROAD and S.C.ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.961351,
+"lon": 77.6348885,
+"label": "Sri Chamudeshwari Sports Link And Fitness",
+"osm": "shop=sports"
+},
+"LRDE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"THIMMAIAH RD and MILLERS ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9918958,
+"lon": 77.5940293,
+"label": "Athena Gym and Fitness",
+"osm": "leisure=sports_centre"
+},
+"PLATFORM and DHANVANTRI RD, Bengaluru": null,
+"KRISHNA FLOOR MILL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9855629,
+"lon": 77.5715961,
+"label": "Krishna Flour Mill",
+"osm": "landuse=industrial"
+},
+"S.C.ROAD and SOUTH PARK ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9933257,
+"lon": 77.571666,
+"label": "Malabar Gold and Diamonds",
+"osm": "shop=jewelry"
+},
+"B.M. SHRI (CMH & 100 FT. ROAD) junction, Bengaluru": null,
+"B.M. SHRI (CMH & 100 FT. ROAD), Bengaluru": null,
+"RING ROAD and BELLARY ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 13.112299,
+"lon": 77.6091794,
+"label": "Bengaluru Business Corridor",
+"osm": "highway=proposed"
+},
+"KODIGEHALLI GATE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0569897,
+"lon": 77.5936645,
+"label": "Kodigehalli Gate",
+"osm": "highway=bus_stop"
+},
+"NANJAPPA CIRCLE (VIDYARANYAPURA) junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0685251,
+"lon": 77.5600191,
+"label": "Nanjappa Circle",
+"osm": "highway=bus_stop"
+},
+"CUNNINGHAM ROAD and MILLERS ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9890319,
+"lon": 77.5930442,
+"label": "Montra Caf\u00e9 and Cycles",
+"osm": "shop=sports"
+},
+"MOSQUE RD and MM ROAD, Bengaluru": null,
+"MOSQUE CIRCLE (MOSQUE RD - MM RD) junction, Bengaluru": null,
+"MOSQUE CIRCLE (MOSQUE RD - MM RD), Bengaluru": null,
+"TANNERY RD and NETAJI RD, Bengaluru": null,
+"POTTERY CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0019067,
+"lon": 77.6120615,
+"label": "Doddi Circle",
+"osm": "junction=yes"
+},
+"VEERANNA PALYA RD and ORR, Bengaluru": null,
+"VEERANNA PALYA JUNCTION (BEL junction, Bengaluru": null,
+"VEERANNA PALYA JUNCTION (BEL, Bengaluru": null,
+"RING ROAD and BADRAPPA LAYOUT, Bengaluru": {
+"provider": "photon",
+"lat": 13.0476065,
+"lon": 77.5772174,
+"label": "Bhadrappa Layout Flyover",
+"osm": "highway=trunk"
+},
+"PUTTANNA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9637507,
+"lon": 77.5857935,
+"label": "Sir Puttanna Chetty Town Hall",
+"osm": "amenity=conference_centre"
+},
+"RAJALAXMI KALYANA MANTAPA junction, Bengaluru": null,
+"RAJALAXMI KALYANA MANTAPA, Bengaluru": {
+"provider": "photon",
+"lat": 12.9853565,
+"lon": 77.5809401,
+"label": "Sri Gururaja Kalyana Mantapa",
+"osm": "building=commercial"
+},
+"T.V.TOWER RD and HEBBAL RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0362616,
+"lon": 77.5895344,
+"label": "Rama Towers",
+"osm": "building=commercial"
+},
+"J.P. NAGAR 9TH CROSS & 24TH MAIN junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9105628,
+"lon": 77.5994783,
+"label": "9th Cross Road",
+"osm": "highway=secondary"
+},
+"JAYANAGAR 3RD BLOCK and T BLOCK, Bengaluru": {
+"provider": "photon",
+"lat": 12.9336404,
+"lon": 77.5829253,
+"label": "Ragavs Diagnostic and Research Centre Pvt Ltd",
+"osm": "amenity=clinic"
+},
+"JAYANAGAR 27TH CROSS JUNCTION (JAYANAGAR 4TH MAIN) junction, Bengaluru": null,
+"JAYANAGAR 27TH CROSS JUNCTION (JAYANAGAR 4TH MAIN), Bengaluru": {
+"provider": "photon",
+"lat": 12.926767,
+"lon": 77.5965015,
+"label": "Sunrise Diagnostics",
+"osm": "amenity=clinic"
+},
+"CANARA BANK JUNCTION (JAYANAGAR 27TH CROSS & 9TH MAIN) junction, Bengaluru": null,
+"CANARA BANK JUNCTION (JAYANAGAR 27TH CROSS & 9TH MAIN), Bengaluru": null,
+"BANNERGATTA RD and JAYANAGAR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9265055,
+"lon": 77.5832362,
+"label": "Jayanagar Cultural And Civic Association",
+"osm": "amenity=community_centre"
+},
+"OLD MADRAS ROAD & INDIRANAGAR 100 FT. ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9788178,
+"lon": 77.6407507,
+"label": "Indiranagar Police Station",
+"osm": "highway=bus_stop"
+},
+"OLD MADRAS ROAD & SUDDAGUNTE PALYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0082021,
+"lon": 77.6922645,
+"label": "Old Madras Road",
+"osm": "highway=trunk"
+},
+"OLD MADRAS ROAD & DOUBLE ROAD JUNCTION (PS JUNCTION) junction, Bengaluru": null,
+"OLD MADRAS ROAD & DOUBLE ROAD JUNCTION (PS JUNCTION), Bengaluru": null,
+"OLD MADRAS ROAD & INDIRANAGAR 80FT RD. junction, Bengaluru": null,
+"OLD MADRAS ROAD & INDIRANAGAR 80FT RD., Bengaluru": {
+"provider": "photon",
+"lat": 12.9829508,
+"lon": 77.6373983,
+"label": "Swamy Vivekananda Road",
+"osm": "highway=primary"
+},
+"BYAPPANAHALLI JUNCTION (SURANJANDAS & OM ROAD) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9712618,
+"lon": 77.6588592,
+"label": "BEML Junction",
+"osm": "junction=yes"
+},
+"J.B.NAGAR and CMH RD (ADE GATE), Bengaluru": {
+"provider": "photon",
+"lat": 12.9625796,
+"lon": 77.6814519,
+"label": "Mayura bakery and Juice",
+"osm": "shop=bakery"
+},
+"S.D.ROAD and THIPPASANDRA ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9801956,
+"lon": 77.6421645,
+"label": "Government Deaf and Dumb School",
+"osm": "amenity=school"
+},
+"BIG BAZAAR JUNCTION (PHARMED FACTORY JN) junction, Bengaluru": null,
+"BIG BAZAAR JUNCTION (PHARMED FACTORY JN), Bengaluru": null,
+"NTTF CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9899856,
+"lon": 77.5719656,
+"label": "Subhash Nagar Junction",
+"osm": "junction=yes"
+},
+"PEENYA 2ND STAGE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0283168,
+"lon": 77.5129632,
+"label": "Peenya 2nd Stage",
+"osm": "place=neighbourhood"
+},
+"HESARAGATTA CROSS junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0092422,
+"lon": 77.5772807,
+"label": "Net Junction",
+"osm": "amenity=internet_cafe"
+},
+"JALAHALLI CROSS (SM CIRCLE) junction, Bengaluru": null,
+"JALAHALLI CROSS (SM CIRCLE), Bengaluru": null,
+"14TH CROSS PEENYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0164785,
+"lon": 77.5057386,
+"label": "Peenya 14th Cross",
+"osm": "highway=bus_stop"
+},
+"BAGALGUNTE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0588716,
+"lon": 77.5019265,
+"label": "Bagalgunte Main Road",
+"osm": "highway=tertiary"
+},
+"BANNERUGHATTA RD and TILAK NAGR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9327913,
+"lon": 77.5905091,
+"label": "3rd Main Road",
+"osm": "highway=residential"
+},
+"TILAKNAGAR MAIN RD and EAST END RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9567879,
+"lon": 77.7413601,
+"label": "Revive Aesthetic Clinic Skin Hair And Laser Center",
+"osm": "amenity=clinic"
+},
+"100FT RING RD and BANNERUGHATTA RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9109695,
+"lon": 77.5999819,
+"label": "Bannerghatta Road",
+"osm": "highway=trunk"
+},
+"MARENAHALLI 18TH MAIN PETROL BUNK junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0420496,
+"lon": 77.6248696,
+"label": "Petrol Bunk Nagavara Junction",
+"osm": "highway=bus_stop"
+},
+"BANNERGHATTA RD and HULIMAVU, Bengaluru": {
+"provider": "photon",
+"lat": 12.8763589,
+"lon": 77.5998058,
+"label": "Tattoos and Tales - Tattoo and piercing studio",
+"osm": "shop=tattoo"
+},
+"J.D. MARA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9082272,
+"lon": 77.6005089,
+"label": "JP Nagara 3rd Phase",
+"osm": "highway=bus_stop"
+},
+"DR.MARIGOWDA RD and BANNERGHATTA RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9352523,
+"lon": 77.6008716,
+"label": "Commissionarate of Employment and Training",
+"osm": "office=government"
+},
+"GURAPPANAPALYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.919549,
+"lon": 77.5999265,
+"label": "Gurappanapalya",
+"osm": "highway=bus_stop"
+},
+"BANNERUGHATTA RD and BILEKALLI RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9352523,
+"lon": 77.6008716,
+"label": "Commissionarate of Employment and Training",
+"osm": "office=government"
+},
+"BTM 16TH MAIN - ORR junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9165668,
+"lon": 77.6100871,
+"label": "Udupi Garden Junction",
+"osm": "junction=yes"
+},
+"29TH BTM ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9165668,
+"lon": 77.6100871,
+"label": "Udupi Garden Junction",
+"osm": "junction=yes"
+},
+"BANNERUGHATTA RD and ARAKERE RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9352523,
+"lon": 77.6008716,
+"label": "Commissionarate of Employment and Training",
+"osm": "office=government"
+},
+"RAJAJINAGAR 1ST BLOCK junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.008272,
+"lon": 77.5544208,
+"label": "Vivekananda College Junction",
+"osm": "junction=yes"
+},
+"RAJAJINAGAR 19TH MAIN junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9960576,
+"lon": 77.5514241,
+"label": "2nd Block Rajajinagara",
+"osm": "highway=bus_stop"
+},
+"DR.RAJKUMAR RD and M.K.K. RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9987184,
+"lon": 77.552661,
+"label": "Shishu Ivf Fertility Centre Pvt Ltd",
+"osm": "amenity=clinic"
+},
+"MALLESHWARAM 18TH CROSS JUNCTION (SAMPIGE ROAD) junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.008731,
+"lon": 77.5711125,
+"label": "Malleshwaram 18th Cross",
+"osm": "highway=bus_stop"
+},
+"MALLESHWARAM 8TH MAIN junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0003553,
+"lon": 77.5653984,
+"label": "8th Cross Malleshwaram",
+"osm": "highway=bus_stop"
+},
+"RRR (OKALIPURAM) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.981952,
+"lon": 77.5660153,
+"label": "Okalipuram Junction",
+"osm": "junction=yes"
+},
+"TILAK NAGAR RD and JAYADEVA RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9918958,
+"lon": 77.5940293,
+"label": "Athena Gym and Fitness",
+"osm": "leisure=sports_centre"
+},
+"LEPROSY HOSPITAL CIRCLE (HUNSEMARA) junction, Bengaluru": null,
+"LEPROSY HOSPITAL CIRCLE (HUNSEMARA), Bengaluru": null,
+"KR MARKET and BAASAVANAGUDI PS, Bengaluru": null,
+"M.C.CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9750656,
+"lon": 77.5483934,
+"label": "Toll Gate Junction",
+"osm": "junction=yes"
+},
+"BASAVAMANTAPA CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9899856,
+"lon": 77.5719656,
+"label": "Subhash Nagar Junction",
+"osm": "junction=yes"
+},
+"MAGADI RD and CHOULURPALYA RD, Bengaluru": null,
+"CHOLUR PALYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9205751,
+"lon": 77.6002099,
+"label": "Gurappana Palya Junction",
+"osm": "highway=traffic_signals"
+},
+"PRASANNA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9974648,
+"lon": 77.4970838,
+"label": "Prasanna Layout",
+"osm": "place=neighbourhood"
+},
+"DR. RAJKUMAR ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9982228,
+"lon": 77.5530637,
+"label": "Navarang Junction",
+"osm": "junction=yes"
+},
+"SILK BOARD RD and KORAMANGALA RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9280827,
+"lon": 77.6373095,
+"label": "Essence Unisex Salon And Spa",
+"osm": "shop=beauty"
+},
+"HOSUR RD and ORR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9444492,
+"lon": 77.6784033,
+"label": "Basaveshwara Glass And Plywoods",
+"osm": "shop=hardware"
+},
+"KUDULU GATE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9750656,
+"lon": 77.5483934,
+"label": "Toll Gate Junction",
+"osm": "junction=yes"
+},
+"DR. MARIGOWDA RD and HOSUR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.8068716,
+"lon": 77.6948508,
+"label": "Dr. Naveen S Tahasildar",
+"osm": "amenity=clinic"
+},
+"HSR 14TH MAIN junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9137415,
+"lon": 77.6374623,
+"label": "HSR Layout BDA Complex",
+"osm": "boundary=lot"
+},
+"SARJAPURA RD and ORR, Bengaluru": {
+"provider": "photon",
+"lat": 12.9215278,
+"lon": 77.6629091,
+"label": "Quba Furniture And Interiors",
+"osm": "shop=furniture"
+},
+"BOMMANAHALLI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9636547,
+"lon": 77.6417197,
+"label": "SV Road to Bommanahalli Elevated Corridor",
+"osm": "highway=proposed"
+},
+"G.B.PALYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9205751,
+"lon": 77.6002099,
+"label": "Gurappana Palya Junction",
+"osm": "highway=traffic_signals"
+},
+"AUTOMART junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"HOSUR RD and INNER RING RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9526709,
+"lon": 77.6401906,
+"label": "Fitness Fight Club",
+"osm": "leisure=sports_centre"
+},
+"RING ROAD -ULLAL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9520232,
+"lon": 77.4999183,
+"label": "Ullal Junction Underpass",
+"osm": "junction=yes"
+},
+"MAGADI ROAD and OUTER RING ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9503714,
+"lon": 77.6987994,
+"label": "Radisson Blu Bengaluru Outer Ring Road",
+"osm": "tourism=hotel"
+},
+"RING ROAD NEAR KENGUNTE junction, Bengaluru": null,
+"RING ROAD NEAR KENGUNTE, Bengaluru": null,
+"KANAKAPURA - RING ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9064981,
+"lon": 77.5732702,
+"label": "Sarakki Junction",
+"osm": "junction=yes"
+},
+"KONANAKUNTE JUNCTION (KANAKAPURA ROAD) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9064981,
+"lon": 77.5732702,
+"label": "Sarakki Junction",
+"osm": "junction=yes"
+},
+"HOODI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9888029,
+"lon": 77.711326,
+"label": "Hoodi",
+"osm": "railway=station"
+},
+"BANAWADI RD and RM NAGAR, Bengaluru": {
+"provider": "photon",
+"lat": 13.0198978,
+"lon": 77.6474795,
+"label": "Magic Mirror Unisex Spa And Salon",
+"osm": "shop=beauty"
+},
+"K.R. MARKET junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9597941,
+"lon": 77.5745426,
+"label": "IMA Junction",
+"osm": "junction=yes"
+},
+"MINERVA CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.954972,
+"lon": 77.5804651,
+"label": "Minerva Circle",
+"osm": "highway=bus_stop"
+},
+"SUBBANNA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9647186,
+"lon": 77.5325572,
+"label": "Subbanna Garden Main road",
+"osm": "highway=tertiary"
+},
+"UPPARPETH junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"SAGAR THEATRE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9967355,
+"lon": 77.5543173,
+"label": "Sagar Caterers and Hotel",
+"osm": "amenity=restaurant"
+},
+"SBM junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"ELITE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"K.G. junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0237734,
+"lon": 77.5507701,
+"label": "Yesvantpur Junction",
+"osm": "railway=station"
+},
+"TRINITY CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9707657,
+"lon": 77.6197262,
+"label": "Trinity Circle",
+"osm": "highway=bus_stop"
+},
+"MG ROAD and DICKENSON ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9744169,
+"lon": 77.6146562,
+"label": "Mitsubishi Elevators and Escalators",
+"osm": "office=company"
+},
+"BAZAAR STREET and S V ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9454046,
+"lon": 77.5712773,
+"label": "Gandhi Bazaar Circle",
+"osm": "junction=yes"
+},
+"MURPHY RD and KENSINGTON RD, Bengaluru": null,
+"TAMARI KANNAN junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9481188,
+"lon": 77.5806443,
+"label": "Tamarind",
+"osm": "natural=tree"
+},
+"LOWER AGRAM RD and MAGRATH RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9668354,
+"lon": 77.6369007,
+"label": "Lavonne Academy of Baking Science and Pastry Arts",
+"osm": "amenity=college"
+},
+"KENSINGTON junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9817978,
+"lon": 77.6231156,
+"label": "Kensington Oval Junction",
+"osm": "junction=yes"
+},
+"AIRPORT RD and CAMBRIDGE RD, Bengaluru": null,
+"CB ROAD AIRPORT junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.959791,
+"lon": 77.6491156,
+"label": "Manipal Hospital Junction",
+"osm": "junction=yes"
+},
+"HALASOORU RD and DICKENSON RD, Bengaluru": null,
+"ADIGAS JUNCTION (ULSOOR RD. - DICKENSON RD.) junction, Bengaluru": null,
+"ADIGAS JUNCTION (ULSOOR RD. - DICKENSON RD.), Bengaluru": null,
+"ANJENEYA TEMPLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9816091,
+"lon": 77.6312913,
+"label": "Anjaneya Temple Junction",
+"osm": "junction=yes"
+},
+"CUBBONPET RD and OTC ROAD, Bengaluru": null,
+"ULSOOR GATE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9750656,
+"lon": 77.5483934,
+"label": "Toll Gate Junction",
+"osm": "junction=yes"
+},
+"ANAND RAO junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9811159,
+"lon": 77.5768709,
+"label": "Ananda Rao - Sleeper bus Hampi - Go Tour",
+"osm": "highway=bus_stop"
+},
+"SHIVAJI TALKIES junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9843505,
+"lon": 77.6117556,
+"label": "Naga Talkies",
+"osm": "highway=bus_stop"
+},
+"JC ROAD and NR ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9635112,
+"lon": 77.5848109,
+"label": "Ganapathy and Company",
+"osm": "shop=convenience"
+},
+"NRUPATUNGA RD and KG ROAD, Bengaluru": null,
+"POLICE CORNER junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9682175,
+"lon": 77.6062145,
+"label": "Old Police Station Junction",
+"osm": "junction=yes"
+},
+"POORNIMA THEATRE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0034188,
+"lon": 77.5840052,
+"label": "Cauvery Junction",
+"osm": "junction=yes"
+},
+"RRMR RD and KASTURABA RD, Bengaluru": null,
+"HUDSON CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9670916,
+"lon": 77.5881772,
+"label": "Hudson Circle",
+"osm": "highway=primary"
+},
+"N.R.ROAD and P.KALINGARAO ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 12.8481663,
+"lon": 77.6921045,
+"label": "Bengaluru Business Corridor",
+"osm": "highway=proposed"
+},
+"KH ROAD and MISSION RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9358801,
+"lon": 77.6214605,
+"label": "Cutz and Curvz Fitness",
+"osm": "leisure=sports_centre"
+},
+"DEVANGA HOSTEL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9657125,
+"lon": 77.5896141,
+"label": "Devanga Hostel Road",
+"osm": "highway=secondary"
+},
+"ST.JOHNS CHURCH RD and KAMRAJ RD, Bengaluru": null,
+"THOMAS BAKERY junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9878307,
+"lon": 77.5499091,
+"label": "Shivanahalli Flyover",
+"osm": "junction=yes"
+},
+"DICKENSON RD and KAMRAJ RD, Bengaluru": null,
+"TYAGI HENAGALAVARAYAN JUNCTION (DICKENSON RD.) junction, Bengaluru": null,
+"TYAGI HENAGALAVARAYAN JUNCTION (DICKENSON RD.), Bengaluru": null,
+"CONTONMENT and SHIVAJINAGAR RD, Bengaluru": null,
+"HAINS junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"NANDI DURGA RD and MILLERS RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9918958,
+"lon": 77.5940293,
+"label": "Athena Gym and Fitness",
+"osm": "leisure=sports_centre"
+},
+"MEKRI CIRCLE and TATA INSTITUTE ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0195248,
+"lon": 77.5838389,
+"label": "Mekhri Circle Elevated Corridor",
+"osm": "highway=proposed"
+},
+"CHOWDAIAH RD and CV RAMAN RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.981998,
+"lon": 77.667295,
+"label": "Pragathi Onyx",
+"osm": "building=apartments"
+},
+"BHASHYAM CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9899856,
+"lon": 77.5719656,
+"label": "Subhash Nagar Junction",
+"osm": "junction=yes"
+},
+"GUTTAHALLI RD and VYALIKAVAL RD, Bengaluru": null,
+"VINAYAKA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9802661,
+"lon": 77.511048,
+"label": "Annapoorneshwari Main Road Junction Underpass",
+"osm": "highway=construction"
+},
+"ST.JOHN CHURCH RD and SEPPINGS RD, Bengaluru": null,
+"COLES PARK junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9940051,
+"lon": 77.6092346,
+"label": "Coles Park",
+"osm": "leisure=park"
+},
+"NAVARANG BAR junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9982228,
+"lon": 77.5530637,
+"label": "Navarang Junction",
+"osm": "junction=yes"
+},
+"RAJAJINAGAR ENTRANCE junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.98458,
+"lon": 77.5568187,
+"label": "Rajajinagar Entrance",
+"osm": "highway=bus_stop"
+},
+"FTI JUNCTION (KANTEERAVA STUDIO) junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0219579,
+"lon": 77.5325057,
+"label": "Netaji Subhash Chandra Bose Junction",
+"osm": "junction=yes"
+},
+"MAHALAXMI ENTRANCE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0241618,
+"lon": 77.5506198,
+"label": "Yeswantapur Junction Platform 6 Entrance",
+"osm": "building=train_station"
+},
+"BHASHYAM CIRCLE-RAJAJINAGAR junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9878307,
+"lon": 77.5499091,
+"label": "Shivanahalli Flyover",
+"osm": "junction=yes"
+},
+"ESI HOSPITAL - RAJAJINAGAR junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9912355,
+"lon": 77.5524849,
+"label": "ESI Hospital Rajajinagara (Towards Navarang)",
+"osm": "highway=bus_stop"
+},
+"R.T. NAGAR POLICE STATION junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0333764,
+"lon": 77.5886107,
+"label": "R T Nagar Traffic Police station",
+"osm": "amenity=police"
+},
+"TARALABALU junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0202056,
+"lon": 77.5946617,
+"label": "Taralabalu Marg",
+"osm": "highway=tertiary"
+},
+"DEVASANDRA junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0365564,
+"lon": 77.5663707,
+"label": "Devasandra",
+"osm": "highway=bus_stop"
+},
+"GULABI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"KUVEMPU CIRCLE-BEL junction, Bengaluru": null,
+"KUVEMPU CIRCLE-BEL, Bengaluru": {
+"provider": "photon",
+"lat": 13.0446478,
+"lon": 77.5624386,
+"label": "Kuvempu Circle",
+"osm": "highway=bus_stop"
+},
+"M.S. RAMAIAH JUCTION (TOLL GATE) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9750656,
+"lon": 77.5483934,
+"label": "Toll Gate Junction",
+"osm": "junction=yes"
+},
+"GOKULDAS IMAGES junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0438295,
+"lon": 77.5537838,
+"label": "Jalahalli Pipeline Junction (Flyover)",
+"osm": "highway=proposed"
+},
+"GURUGUNTA PALYA junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9205751,
+"lon": 77.6002099,
+"label": "Gurappana Palya Junction",
+"osm": "highway=traffic_signals"
+},
+"YELAHANKA BYPASS junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.1050067,
+"lon": 77.5918938,
+"label": "Yelahanka Junction",
+"osm": "railway=station"
+},
+"BEL CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0454803,
+"lon": 77.5565269,
+"label": "BEL Circle",
+"osm": "highway=primary"
+},
+"KOGILU CROSS junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.103589,
+"lon": 77.6012045,
+"label": "Kogilu Cross",
+"osm": "highway=bus_stop"
+},
+"YELAHANKA CIRCLE junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.1050067,
+"lon": 77.5918938,
+"label": "Yelahanka Junction",
+"osm": "railway=station"
+},
+"BAGALUR CROSS junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.121902,
+"lon": 77.6108084,
+"label": "Bagalur Cross",
+"osm": "junction=yes"
+},
+"HUNSEMARENAHALLI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9781739,
+"lon": 77.5695603,
+"label": "Krantivira Sangolli Rayanna (Bengaluru)",
+"osm": "railway=station"
+},
+"DAIRY CIRCLE and WILSON GARDEN RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9352523,
+"lon": 77.6008716,
+"label": "Commissionarate of Employment and Training",
+"osm": "office=government"
+},
+"AMRITAHALLI JUNCTION (BYATARAYANAPURA AIRPORT ROAD) junction, Bengaluru": {
+"provider": "photon",
+"lat": 13.0577696,
+"lon": 77.5950588,
+"label": "Sanjay Food Junction",
+"osm": "amenity=restaurant"
+},
+"DR. MARIGOWDA RD and T.MARIAPPA RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.8068716,
+"lon": 77.6948508,
+"label": "Dr. Naveen S Tahasildar",
+"osm": "amenity=clinic"
+},
+"LALBAGH RD and SIDDAIAH RD, Bengaluru": null,
+"URVASHI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9561526,
+"lon": 77.5854735,
+"label": "Urvashi",
+"osm": "amenity=cinema"
+},
+"LALBAGH RD and DR. MARIGOWDA RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0190488,
+"lon": 77.5315045,
+"label": "Dudez Saloon And Spa",
+"osm": "shop=beauty"
+},
+"DR.MARIGOWDA RD and NIMHANS RD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0190488,
+"lon": 77.5315045,
+"label": "Dudez Saloon And Spa",
+"osm": "shop=beauty"
+},
+"KH ROAD and WILSON GARDEN RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.9487281,
+"lon": 77.6003812,
+"label": "KH phrama",
+"osm": "shop=medical_supply"
+},
+"LALBAGH ROAD and SIDDAIAH ROAD, Bengaluru": {
+"provider": "photon",
+"lat": 13.0023897,
+"lon": 77.629504,
+"label": "Siddaiah Multi Speciality Clinic And Lab",
+"osm": "amenity=pharmacy"
+},
+"ITPL RD and CHANNASANDRA, Bengaluru": null,
+"HOPE FARM junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9873426,
+"lon": 77.7538033,
+"label": "Hopefarm Channasandra",
+"osm": "railway=station"
+},
+"MARATHAHALLI RD and VARTHUR RD, Bengaluru": {
+"provider": "photon",
+"lat": 12.955617,
+"lon": 77.7193679,
+"label": "Sofiyacare Skin And Hair Clinic",
+"osm": "amenity=clinic"
+},
+"SHIVANAHALLI junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9878307,
+"lon": 77.5499091,
+"label": "Shivanahalli Flyover",
+"osm": "junction=yes"
+},
+"VIJAYANAGAR BUS STAND junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9652263,
+"lon": 77.5345574,
+"label": "Vijayanagar Bus Stand",
+"osm": "amenity=bus_station"
+},
+"PUTTAMMA CHOULTRY JUNCTION-NAGARABHAVI ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9757365,
+"lon": 77.5385316,
+"label": "Sarvagna School Junction",
+"osm": "junction=yes"
+},
+"SHANKAR MUTT CIRCLE (VIJAYANAGAR) junction, Bengaluru": null,
+"SHANKAR MUTT CIRCLE (VIJAYANAGAR), Bengaluru": {
+"provider": "photon",
+"lat": 12.9993438,
+"lon": 77.5410844,
+"label": "Shankar Mutt Circle",
+"osm": "junction=yes"
+},
+"MODI HOSPITAL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9975438,
+"lon": 77.5495758,
+"label": "Modi Hospital Main Road",
+"osm": "highway=secondary"
+},
+"NATIONAL SCHOOL junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9529035,
+"lon": 77.5158003,
+"label": "National Law School of India University",
+"osm": "amenity=university"
+},
+"KHB junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9810593,
+"lon": 77.5356869,
+"label": "KHB Junction Underpass",
+"osm": "highway=primary"
+},
+"MARENAHALLI JUNCTION (VIJAYANAGAR) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9604935,
+"lon": 77.5294107,
+"label": "Bunny Bakes",
+"osm": "shop=bakery"
+},
+"HAVANUR CIRCLE (BASAVESHWARANAGAR) junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9879493,
+"lon": 77.5374596,
+"label": "Havanur Circle",
+"osm": "junction=yes"
+},
+"JAIMUNIRAO CIRCLE-MAGADI MAIN ROAD junction, Bengaluru": {
+"provider": "photon",
+"lat": 12.9750656,
+"lon": 77.5483934,
+"label": "Toll Gate Junction",
+"osm": "junction=yes"
+}
+}

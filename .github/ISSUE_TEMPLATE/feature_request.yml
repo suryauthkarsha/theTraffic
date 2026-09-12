@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a focused improvement
+title: "feature: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: Explain the user or research problem before proposing an implementation.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Who is affected, and what cannot they do today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful solution.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: risks
+    attributes:
+      label: Data, privacy, or maintenance risks
+      description: Note any new data source, external request, personal data, dependency, or recurring work.
+  - type: checkboxes
+    id: principles
+    attributes:
+      label: Project principles
+      options:
+        - label: The proposal does not depend on an unauthorised private feed.
+          required: true
+        - label: The proposal will not turn missing or stale data into a confident claim.
+          required: true

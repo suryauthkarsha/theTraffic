@@ -1,0 +1,422 @@
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  theTraffic. design tokens — black & orange (user decision 2026-09-08).
+  Flat colour everywhere: no text-shadow, box-shadow halos or blurred glows (user decision 2026-09-07),
+  and no glow on the maps either — every signal marker is a flat orange dot in its own colour with a
+  hairline black casing (user decision 2026-09-08, see components/map/layers.ts).
+  Hex reference (see .rork/DESIGN.md):
+    canvas #000000 · surface #0F0E0D · card #090808 · border #221F1C · hover #171513 · track #2B2825 · tick #4D4843
+    text #F3EFE9 · secondary #9A928A · muted #67605A
+    orange #FF8A2B (accent, ok, confirmed) · ember #C0651C (partial, uncertain, degraded) · red #F0535A · grey #67605A (chrome only — on the maps "nothing known" is dim #8A4A18)
+    mark #FF3B30 — the red full stop of the wordmark "theTraffic." and nothing else (user decision 2026-09-09)
+*/
+@layer base {
+  :root,
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 36 29% 93%;
+
+    --card: 0 6% 3%;
+    --card-foreground: 36 29% 93%;
+
+    --popover: 30 7% 5.5%;
+    --popover-foreground: 36 29% 93%;
+
+    --primary: 27 100% 58%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 30 7% 16%;
+    --secondary-foreground: 36 29% 93%;
+
+    --muted: 30 10% 12%;
+    --muted-foreground: 30 7% 57%;
+
+    --accent: 30 10% 8%;
+    --accent-foreground: 36 29% 93%;
+
+    --destructive: 357 84% 63%;
+    --destructive-foreground: 0 0% 0%;
+
+    --border: 30 10% 12%;
+    --input: 30 10% 12%;
+    --ring: 27 100% 58%;
+
+    --radius: 0.375rem;
+
+    --sidebar-background: 30 7% 5.5%;
+    --sidebar-foreground: 36 29% 93%;
+    --sidebar-primary: 27 100% 58%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 30 10% 8%;
+    --sidebar-accent-foreground: 36 29% 93%;
+    --sidebar-border: 30 10% 12%;
+    --sidebar-ring: 27 100% 58%;
+
+    --gw-tick: #4d4843;
+
+    /* Chrome heights including the device safe areas (notch / home indicator; viewport-fit=cover).
+       Inside the Rork preview iframe env() is always 0px while a phone's status bar is drawn over the
+       page, so lib/system/previewInsets publishes that phone's insets as --gw-preview-*; the larger
+       value wins and real devices are untouched. */
+    --gw-preview-top: 0px;
+    --gw-preview-bottom: 0px;
+    --gw-safe-top: max(env(safe-area-inset-top, 0px), var(--gw-preview-top));
+    --gw-safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--gw-preview-bottom));
+    --gw-top: calc(3.5rem + var(--gw-safe-top));
+    --gw-rail: calc(1.75rem + var(--gw-safe-bottom));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "tnum" 1, "calt" 1;
+    background-color: #000000;
+    color: #f3efe9;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  /* Touch: no double-tap zoom on controls (removes the tap delay too); text stays pinch-zoomable. */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  summary,
+  [role="button"],
+  [role="option"] {
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background: rgba(255, 138, 43, 0.32);
+  }
+
+  :focus-visible {
+    outline: 2px solid #ff8a2b;
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2b2825;
+    border-radius: 999px;
+    border: 2px solid #000000;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Floating instrument panel: 4 px radius, hairline border, inner top highlight, deep shadow. */
+  .panel {
+    @apply relative rounded-[4px] border border-gw-border bg-gw-surface;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  }
+  /* HUD corner ticks (8 hairline segments) for the primary panel on a screen — never on every card. */
+  .panel-hud::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 0 0 / 12px 1px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 0 0 / 1px 12px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 100% 0 / 12px 1px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 100% 0 / 1px 12px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 0 100% / 12px 1px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 0 100% / 1px 12px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 100% 100% / 12px 1px no-repeat,
+      linear-gradient(var(--gw-tick), var(--gw-tick)) 100% 100% / 1px 12px no-repeat;
+  }
+  .panel-hud-orange {
+    --gw-tick: #ff8a2b;
+  }
+  .card-inset {
+    @apply rounded-[3px] border border-gw-border bg-gw-card;
+  }
+  /* The lander's ASCII knot: a very dark ghost straight on the black canvas beside the title —
+     no panel, no caption; monochrome warm grey held at 35 %, so the title stays the brightest thing. */
+  .knot-ghost {
+    color: #9a928a;
+    opacity: 0.35;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .label {
+    @apply text-[11px] font-medium uppercase tracking-[0.08em] text-gw-muted;
+  }
+  .label-strong {
+    @apply text-[11px] font-medium uppercase tracking-[0.08em] text-gw-secondary;
+  }
+  /* Mono eyebrow above headlines: "02 · SIGNAL MAP". */
+  .eyebrow {
+    @apply mono text-[10.5px] font-medium uppercase tracking-[0.16em] text-gw-muted;
+  }
+  .eyebrow b {
+    @apply font-medium text-gw-orange;
+  }
+  /* Large instrument readouts (KPI digits): flat mono colour — no glow, ever. */
+  .readout {
+    @apply mono font-medium leading-none tracking-[-0.01em];
+  }
+  .readout-orange {
+    @apply text-gw-orange;
+  }
+  .readout-ember {
+    @apply text-gw-ember;
+  }
+  .btn-primary {
+    @apply inline-flex h-11 items-center justify-center rounded-[4px] bg-gw-orange px-5 text-[15px] font-semibold text-gw-canvas transition-colors hover:bg-[#ff9c4d] active:bg-[#f07a1a] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-secondary {
+    @apply inline-flex h-10 items-center justify-center rounded-[4px] border border-gw-track bg-transparent px-4 text-[14px] font-medium text-gw-text transition-colors hover:bg-gw-hover;
+  }
+  .input-field {
+    @apply flex h-11 w-full items-center gap-3 rounded-[4px] border border-gw-border bg-gw-card px-3 text-[15px] text-gw-text placeholder:text-gw-muted focus-within:border-gw-orange;
+  }
+  .segment {
+    @apply inline-flex rounded-[4px] bg-gw-border p-0.5;
+  }
+  .segment > button {
+    @apply rounded-[3px] px-3 py-1.5 text-[13px] text-gw-secondary transition-colors hover:text-gw-text;
+  }
+  .segment > button[aria-pressed="true"] {
+    @apply bg-gw-track text-gw-text;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-[3px] border border-gw-border bg-gw-card px-2.5 py-1 text-[12px] text-gw-secondary;
+  }
+  .kbd {
+    @apply mono rounded-[3px] border border-gw-border bg-gw-card px-1.5 py-0.5 text-[11px] text-gw-secondary;
+  }
+  /* Hairline rule with a short bright tick at the left end. */
+  .rule {
+    @apply relative h-px w-full bg-gw-border;
+  }
+  .rule::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 24px;
+    height: 3px;
+    background: var(--gw-tick);
+  }
+  /* Engineering grid under scrolling pages; fades towards the edges. */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(154, 146, 138, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(154, 146, 138, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 15%, #000 20%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 15%, #000 20%, transparent 90%);
+  }
+  /* Soft dark vignette over the map so floating panels read against the imagery. */
+  .map-vignette {
+    background: radial-gradient(ellipse 70% 65% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.62) 100%);
+  }
+  /* System status rail (bottom of every screen): mono, hairline top, canvas at 92 %. Grows by the
+     home-indicator safe area on notched phones so the last row is never under the gesture bar. */
+  .rail {
+    @apply mono flex items-center gap-0 overflow-x-auto whitespace-nowrap border-t border-gw-border text-[10.5px] uppercase tracking-[0.06em] text-gw-muted backdrop-blur-sm;
+    height: var(--gw-rail);
+    padding-bottom: var(--gw-safe-bottom);
+    background-color: rgba(0, 0, 0, 0.92);
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+  .rail-item {
+    @apply flex h-full shrink-0 items-center gap-1.5 border-r border-gw-border px-3;
+  }
+  .rail-item b {
+    @apply font-medium normal-case tracking-normal text-gw-secondary;
+  }
+  .rail-dot {
+    @apply inline-block h-1.5 w-1.5 shrink-0 rounded-full;
+  }
+}
+
+/* Touch targets: on coarse pointers every control grows to the 44 px minimum (WCAG 2.5.8 / HIG). */
+@media (pointer: coarse) {
+  .segment > button,
+  .chip,
+  .btn-secondary,
+  .btn-primary,
+  .input-field,
+  select,
+  [role="option"] > a,
+  [role="option"] > button {
+    min-height: 44px;
+  }
+  /* iOS Safari zooms the page into any field under 16 px; keep every field at 16 px on touch devices. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+}
+
+/* Bottom sheet (map screens on phones): the grab zone owns its touches; the body never scrolls under it. */
+.sheet {
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
+}
+.sheet-grip {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sheet-body {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Phones: MapLibre's own chrome moves up (the sheet owns the bottom edge) and the zoom buttons go — pinch does that. */
+.map-mobile .maplibregl-ctrl-top-left {
+  margin-top: 10px;
+}
+.map-mobile .maplibregl-ctrl-bottom-right,
+.map-mobile .maplibregl-ctrl-bottom-left {
+  display: none;
+}
+
+/* MapLibre chrome overrides */
+.maplibregl-ctrl-group {
+  background: #0f0e0d !important;
+  border: 1px solid #221f1c;
+  border-radius: 4px !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55) !important;
+}
+.maplibregl-ctrl-group button + button {
+  border-top: 1px solid #221f1c !important;
+}
+.maplibregl-ctrl button .maplibregl-ctrl-icon {
+  filter: invert(0.85);
+}
+.maplibregl-ctrl-attrib {
+  background: rgba(0, 0, 0, 0.75) !important;
+  color: #67605a !important;
+  font-size: 10px !important;
+}
+.maplibregl-ctrl-attrib a {
+  color: #9a928a !important;
+}
+.maplibregl-popup-content {
+  background: #0f0e0d !important;
+  color: #f3efe9 !important;
+  border: 1px solid #221f1c;
+  border-radius: 4px !important;
+  padding: 0 !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55) !important;
+}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+  border-top-color: #221f1c !important;
+}
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+  border-bottom-color: #221f1c !important;
+}
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: #221f1c !important;
+}
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: #221f1c !important;
+}
+.maplibregl-popup-close-button {
+  color: #9a928a !important;
+  font-size: 18px;
+  padding: 4px 8px !important;
+}
+/* Cooperative-gesture hint on embedded maps ("use two fingers" / "⌘ + scroll"): our type and colours. */
+.maplibregl-cooperative-gesture-screen {
+  background: rgba(0, 0, 0, 0.72) !important;
+  color: #f3efe9 !important;
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px !important;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* "Live" indicator: a flat opacity pulse (no expanding halo). */
+@keyframes gw-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.pulse-dot {
+  animation: gw-pulse 1.4s ease-in-out infinite;
+}
+@keyframes gw-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: gw-rise 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+/* Clock separator on the status rail. */
+@keyframes gw-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.3;
+  }
+}
+.blink {
+  animation: gw-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot,
+  .rise-in,
+  .blink {
+    animation: none;
+  }
+  .sheet {
+    transition: none !important;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}

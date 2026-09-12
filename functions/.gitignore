@@ -1,0 +1,9 @@
+node_modules
+.wrangler/
+
+# wrangler's local secrets and any env file
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example

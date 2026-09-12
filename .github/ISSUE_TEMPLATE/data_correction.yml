@@ -1,0 +1,62 @@
+name: Data correction
+description: Propose a sourced correction to a signal, timing plan, surveillance record, or registry entry
+title: "data: "
+labels:
+  - data
+body:
+  - type: dropdown
+    id: dataset
+    attributes:
+      label: Dataset
+      options:
+        - Signal geometry
+        - Published timing plans
+        - Reviewer decisions
+        - Surveillance records
+        - Historical evidence or source registry
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: record
+    attributes:
+      label: Record ID or page URL
+      description: Include the stable project or source identifier.
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current value
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Public source URL
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Provenance
+      description: Publisher, observation date, retrieval date, licence or reuse terms, and any transformation.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I have not included private contact details or personal movement traces.
+          required: true
+        - label: I am not inferring that a surveillance device is active, monitored, or capable of a specific detection method.
+          required: true
+        - label: I understand that a parsed timing plan still requires explicit reviewer verification.
+          required: true
