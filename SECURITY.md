@@ -27,3 +27,5 @@ For vulnerabilities in a third-party service or dependency, report the issue ups
 ## Security design
 
 The repository includes regression tests for credential patterns, environment-file exclusions, Content Security Policy, outbound links, Worker headers, named-origin CORS, upload limits, JPEG metadata removal, rate limiting, and moderator-passphrase handling. See `web/src/test/security.test.ts` and `docs/DEPLOYMENT.md`.
+
+Automation is pinned and watched: every GitHub Action is referenced by commit, workflows run with read-only repository permissions and no secrets, Dependabot proposes dependency updates for every manifest (`.github/dependabot.yml`), and CodeQL scans the TypeScript, Python and workflow code (`.github/workflows/codeql.yml`). The same test fails if any of that loosens. Secret-scanning push protection, Dependabot alerts and branch protection are repository settings the maintainer keeps on (`docs/DEPLOYMENT.md`, "Repository settings").

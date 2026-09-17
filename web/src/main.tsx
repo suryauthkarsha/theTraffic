@@ -13,7 +13,7 @@ import "@fontsource/ibm-plex-mono/600.css";
 // MapLibre v6 worker registration — must run before any map is constructed.
 import "@/lib/maplibre";
 
-import { installAnalytics } from "@/lib/system/analytics";
+import { installAnalytics, installDataFast } from "@/lib/system/analytics";
 import { installPreviewInsets } from "@/lib/system/previewInsets";
 
 import App from "./App.tsx";
@@ -21,7 +21,9 @@ import "./index.css";
 
 // Before the first paint: inside the Rork preview frame the drawn status bar needs a safe area env() cannot report.
 installPreviewInsets();
-// Google Analytics, only when a measurement id is configured (and the visitor sends no Global Privacy Control).
+// The audience counters: DataFast on every build, Google Analytics only when a measurement id is
+// configured — neither when the visitor sends Global Privacy Control.
+installDataFast();
 installAnalytics();
 
 createRoot(document.getElementById("root")!).render(<App />);

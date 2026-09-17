@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { analyticsDecision, analyticsState, GTAG_SRC, installAnalytics, pageLocation, pageView } from "./analytics";
+import { analyticsDecision, analyticsState, DATAFAST_DOMAIN, DATAFAST_SRC, DATAFAST_WEBSITE_ID, GTAG_SRC, installAnalytics, installDataFast, pageLocation, pageView } from "./analytics";
 
 type Win = Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
 const win = window as Win;
@@ -109,5 +109,48 @@ describe("Google Analytics (user request 2026-09-09)", () => {
 
   it("never reports the query string", () => {
     expect(pageLocation({ origin: "https://thetraffic.example", pathname: "/support" })).toBe("https://thetraffic.example/support");
+  });
+});
+
+describe("DataFast (user request 2026-09-13)", () => {
+  it("inserts the pasted snippet into <head> as a script element: defer, website id, root domain, DataFast's src", () => {
+    expect(installDataFast()).toBe("on");
+    const scripts = document.head.querySelectorAll<HTMLScriptElement>("script");
+    expect(scripts).toHaveLength(1);
+    const script = scripts[0];
+    expect(script.src).toBe(DATAFAST_SRC);
+    expect(script.defer).toBe(true);
+    expect(script.getAttribute("data-website-id")).toBe(DATAFAST_WEBSITE_ID);
+    expect(script.getAttribute("data-domain")).toBe(DATAFAST_DOMAIN);
+    expect(script.textContent).toBe(""); // no inline code: the policy needs no nonce or hash
+  });
+
+  it("carries the snippet's own values: a dfid website id and the site's root domain", () => {
+    expect(DATAFAST_WEBSITE_ID).toMatch(/^dfid_[A-Za-z0-9]+$/);
+    expect(DATAFAST_DOMAIN).toBe("thetraffic.in");
+    expect(new URL(DATAFAST_SRC).origin).toBe("https://datafa.st");
+  });
+
+  it("installs once: a second call finds the script and adds nothing", () => {
+    expect(installDataFast()).toBe("on");
+    expect(installDataFast()).toBe("present");
+    expect(document.head.querySelectorAll("script")).toHaveLength(1);
+  });
+
+  it("respects Global Privacy Control: nothing loads", () => {
+    const fake = {
+      navigator: { globalPrivacyControl: true },
+      document,
+      location: window.location,
+    } as unknown as Parameters<typeof installDataFast>[0];
+    expect(installDataFast(fake)).toBe("gpc");
+    expect(document.querySelector("script")).toBeNull();
+  });
+
+  it("sits beside Google Analytics without touching it", () => {
+    installDataFast();
+    expect(installAnalytics("G-TEST123456")).toBe("on");
+    const srcs = Array.from(document.head.querySelectorAll<HTMLScriptElement>("script")).map((s) => s.src);
+    expect(srcs).toEqual([DATAFAST_SRC, `${GTAG_SRC}?id=G-TEST123456`]);
   });
 });

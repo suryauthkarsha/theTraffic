@@ -243,8 +243,8 @@ export function fitGreenStarts(events: number[], opts: { Cmin?: number; Cmax?: n
   let best: GreenStartFit | null = coarse.filter((c) => c.cost <= minCost + tolerance).reduce<GreenStartFit | null>((b, c) => (!b || c.C > b.C ? c : b), null);
   if (!best) return null;
   // local refinement (0.1 s) around the coarse optimum
-  for (let C = best.C - 1; C <= best.C + 1; C += 0.1) {
-    for (let O = best.O - 1; O <= best.O + 1; O += 0.1) {
+  for (let C: number = best.C - 1; C <= best.C + 1; C += 0.1) {
+    for (let O: number = best.O - 1; O <= best.O + 1; O += 0.1) {
       const cost = g.reduce((s, x) => s + huber(circularResidual(x, ((O % C) + C) % C, C), delta), 0);
       if (cost < best.cost) best = { ...best, C: Number(C.toFixed(1)), O: Number((((O % C) + C) % C).toFixed(1)), cost };
     }

@@ -18,7 +18,7 @@ const FAQ: { q: string; a: string }[] = [
   { q: "What do the colours mean?", a: "What we know about a junction — how much timing data it has, the wait an accepted plan implies, how surely its signals were merged. Never what a light is doing." },
   { q: "Do you know the current signal state?", a: "No. There is no live feed for Bengaluru's signals. Estimates come from published timing plans with an explicit accepted junction link; without one, a junction reads Unknown." },
   { q: "Why a delay at one time and a dash at another?", a: "A plan covers set windows on set day types. Inside an accepted plan window we show what the cycle implies; outside it there is no cycle to reason about." },
-  { q: "Do you record anything or need an account?", a: "No account. The only thing we keep is what you choose to post on the grievance board — the kind, the words, the place and the photo, with no name or number attached. Google Analytics counts which pages are visited and stays off when your browser sends the Global Privacy Control signal." },
+  { q: "Do you record anything or need an account?", a: "No account. The only thing we keep is what you choose to post on the grievance board — the kind, the words, the place and the photo, with no name or number attached. DataFast and Google Analytics count which pages are visited — never what you type — and both stay off when your browser sends the Global Privacy Control signal." },
   { q: "Where do the timing plans come from?", a: "Bengaluru Traffic Police sheets published on OpenCity, parsed into time-of-day windows and linked to junctions by recorded AI-assisted review decisions before a prediction may use them." },
 ];
 
@@ -129,6 +129,7 @@ export default function SupportPage() {
               </div>
             </section>
 
+            {/* The helmet campaign (2026-09-12): ISI helmets for bike-taxi passengers, paid for by UPI. */}
             <section className="panel flex flex-wrap items-center gap-3 p-4" aria-labelledby={`${id}-helmet`}>
               <HardHat size={17} className="shrink-0 text-gw-orange" aria-hidden />
               <div className="min-w-0 flex-1">

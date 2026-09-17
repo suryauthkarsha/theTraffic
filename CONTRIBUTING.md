@@ -47,7 +47,9 @@ python3 -m pip install -r requirements-dev.txt
 python3 -m unittest discover -s scripts/tests -v
 ```
 
-A web build must pass with an empty environment. Do not weaken the secret scanner, Content Security Policy, origin allow-list, upload limits, or privacy tests to make a change pass.
+A web build must pass with an empty environment. Do not weaken the secret scanner, Content Security Policy, origin allow-list, upload limits, or privacy tests to make a change pass. `bun run typecheck` checks both TypeScript projects (`tsconfig.app.json` is strict); `bun run build` also writes one HTML page per screen and per junction (`docs/DEPLOYMENT.md`, "Search pages") and fails if an environment value reaches any of them.
+
+Automation changes: reference every GitHub Action by its full commit SHA (with the version in a comment), keep `permissions: contents: read` at the top of each workflow, and add any new dependency manifest to `.github/dependabot.yml`. `web/src/test/security.test.ts` checks all three.
 
 ## Data contributions
 

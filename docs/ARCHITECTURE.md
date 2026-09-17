@@ -18,8 +18,10 @@
           │  one server of ours: the grievance board (below), called only from /grievance and /grievances
 
 functions/ (Cloudflare Worker + Durable Objects) — the grievance board since 2026-09-11 (`docs/DEPLOYMENT.md`
-  § The Worker): `index.ts` routes, caps and validates; `GrievanceBoard` (one instance) holds the rows in
-  SQLite and applies the rate limits; `GrievancePhotos` (256 shards) holds the stripped JPEGs. Reads two env
+  § The Worker): `index.ts` routes, caps and validates, asks the board's rate-limit verdict before reading a
+  submission, and answers repeated pages from a 5-second memory; `GrievanceBoard` (one instance) holds the rows in
+  SQLite, applies the rate limits and keeps the board's counts and served pages in memory until the next change;
+  `GrievancePhotos` (256 shards) holds the stripped JPEGs. Reads two env
   values (moderator passphrase, extra origins). GET /ping; 410 Gone on the former routing / search routes.
 scripts/  build-intersections.ts (Overpass → master map) · sync-surveillance.ts (cached Overpass → surveillance snapshot)
           · ingest_opencity_timing.py · ingest_secondary_sources.py
@@ -28,8 +30,16 @@ scripts/  build-intersections.ts (Overpass → master map) · sync-surveillance.
 There is no authentication and no visitor data store (removed 2026-09-08), and no route or departure
 planner (removed the same day, user decision). The one store is the grievance board — what people
 choose to post about the road, with no field for who posted it (`docs/PRIVACY.md`). The site measures
-its own audience with Google Analytics 4 page views, only when a measurement id is configured at build
-time (`lib/system/analytics.ts`).
+its own audience with DataFast page views on every build and Google Analytics 4 page views when a
+measurement id is configured at build time (`lib/system/analytics.ts`).
+
+Search metadata is one pure table, `lib/system/routeMeta.ts` (title, description, canonical path,
+breadcrumb trail per route), read from two sides: at build, `lib/system/prerender.ts` writes one copy
+of the finished `index.html` per screen and per junction with that page's own head tags and JSON-LD
+(`WebPage` · `BreadcrumbList` · `Place` for a junction · `Dataset` on the data screens) plus
+`sitemap.xml`; at run time, `usePageTitle` sets the same title on the tab and rewrites the same tags
+once a screen mounts (`lib/system/seo.ts`). The build modules import no app code, environment or DOM
+(`security.test.ts` pins it) — `docs/DEPLOYMENT.md` § Search pages.
 
 ## Data flow
 

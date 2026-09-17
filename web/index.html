@@ -9,8 +9,10 @@
     <meta name="application-name" content="theTraffic." />
     <meta name="format-detection" content="telephone=no" />
 
-    <!-- Site-wide defaults for crawlers that do not run scripts; every screen rewrites title, description,
-         canonical and the share cards for itself once it mounts (src/lib/system/seo.ts). -->
+    <!-- The home page's head, and the template for every other screen's: at build, src/lib/system/prerender.ts
+         writes one copy of the finished file per screen and per junction with that page's own title, description,
+         canonical link, share cards and JSON-LD (signals/index.html, intersection/<id>/index.html, ...); once a
+         screen mounts it rewrites the same tags from the same table (src/lib/system/routeMeta.ts, usePageTitle). -->
     <title>theTraffic. · Bengaluru traffic signals, junction by junction</title>
     <meta name="description" content="Bengaluru's mapped traffic signals and published timing records, a dated OpenStreetMap surveillance snapshot, and an account-free public board of road problems." />
     <meta name="keywords" content="Bengaluru traffic signals, Bangalore traffic signals, Bengaluru traffic lights, traffic signal timing Bengaluru, Bengaluru junctions, Bangalore junction map, Silk Board signal, Bengaluru Traffic Police signal timing, CCTV cameras Bengaluru, surveillance cameras Bangalore map, Bengaluru road problems, potholes Bengaluru, footpath Bengaluru, water logging Bengaluru, pedestrian crossing Bengaluru, street light complaint Bengaluru, road grievance Bengaluru, civic issues Bangalore, account-free grievance board, ISI helmet campaign Bengaluru, bike taxi pillion helmet, OpenStreetMap Bengaluru" />
@@ -45,9 +47,14 @@
     <meta name="twitter:image" content="https://www.thetraffic.in/og-image.jpg" />
     <meta name="twitter:image:alt" content="theTraffic. — Bengaluru's roads, junction by junction" />
 
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <!-- The mark (scripts/build_icons.py): the orange signal route with three cased junctions on black, each size
+         drawn on its own pixel grid. Browsers that pick by size take the PNG that fits; those that take the last
+         icon link get the .ico, which carries 16 / 32 / 48; search engines take the 48 px or larger PNGs. -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <!-- IBM Plex is bundled with the app (@fontsource, imported in main.tsx): no font request leaves the site. -->
 

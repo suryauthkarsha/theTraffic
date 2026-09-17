@@ -67,6 +67,7 @@ const LandingPage = () => {
               ["#method", "How it works"],
               ["#rules", "Our rules"],
               ["#data", "Data"],
+              ["#campaign", "Campaign"],
             ].map(([href, label]) => (
               <a key={href} href={href} className="flex h-14 items-center px-3 text-[14px] text-gw-secondary transition-colors hover:text-gw-text">
                 {label}
@@ -249,7 +250,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Campaign */}
+        {/* Campaign (user request 2026-09-12): one panel leading to /helmet — ISI helmets for bike-taxi passengers, paid for by UPI. */}
         <section id="campaign" className="border-t border-gw-border" aria-labelledby="campaign-title">
           <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-8 lg:py-20">
             <h2 id="campaign-title" className={h2}>

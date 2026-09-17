@@ -2,8 +2,14 @@
 //
 // One instance ("bengaluru") holds every grievance's words, kind, place and photo facts in its SQLite
 // storage, and is the single authority on what may be posted: it applies the per-caller and global
-// rate limits, assigns the sequence the board pages by, and answers moderation. Photo bytes live in
-// the GrievancePhotos shards (grievance-photos.ts) so this object stays small and fast to read.
+// rate limits — and answers the Worker's read-only pre-check of them (/allowance), asked before a
+// submission's body is read, so a caller over a limit costs a few indexed counts and nothing else —
+// assigns the sequence the board pages by, and answers moderation. Photo bytes live in the
+// GrievancePhotos shards (grievance-photos.ts) so this object stays small and fast to read, and the
+// whole-board counts a page carries are kept in memory between changes, and so is every page served,
+// until the next post or removal — so a repeated page is a lookup, a new one is one indexed query,
+// and neither is ever stale. Pages leave with a short public cache lifetime (_lib/cache.ts) for the
+// Worker to keep.
 //
 // Account-free by construction: a row has no account or contact column. Its words, photo, place and
 // filing time can still identify people or private locations. Rate limits key on a hash of the caller's
@@ -12,8 +18,9 @@
 
 import { DurableObject } from "cloudflare:workers";
 
-import { bearerToken, errorResponse, jsonResponse, secretsEqual } from "./_lib/http";
-import { KINDS, kindFilter, pageCursor, pageLimit, UUID, type Kind, type Submission } from "./_lib/validate";
+import { canonicalCursor, LIST_CACHE_CONTROL, listQuery, listSearch, PageMemo } from "./_lib/cache";
+import { bearerToken, errorResponse, jsonResponse, jsonTextResponse, secretsEqual } from "./_lib/http";
+import { KINDS, PHOTO_REQUIRED, UUID, type Kind, type Submission } from "./_lib/validate";
 
 type Env = {
   /** Moderator passphrase; without it the moderation routes answer 503. */
@@ -66,15 +73,26 @@ export interface PublicGrievance {
 export interface SubmitBody {
   id: string;
   submission: Submission;
-  photo: { width: number; height: number; bytes: number } | null;
+  /** Every grievance carries a photo (user decision 2026-09-13); rows filed before then may have none. */
+  photo: { width: number; height: number; bytes: number };
   /** sha256 of the caller's address, or null when the platform passed none. */
   client: string | null;
+}
+
+/** The whole-board counts every page carries, and the newest sequence (a cursor past it is the first page). */
+interface BoardStats {
+  total: number;
+  byKind: Record<Kind, number>;
+  newestSeq: number;
 }
 
 const MINUTE = 60_000;
 const HOUR = 3_600_000;
 
 const utcDay = (ms: number): string => new Date(ms).toISOString().slice(0, 10);
+
+/** The one sentence for a caller over a limit, with how long to wait. */
+const tooMany = (waitS: number): Response => errorResponse("Too many grievances from here for now — try again later.", 429, null, { "Retry-After": String(waitS) });
 
 export function toPublic(r: GrievanceRow): PublicGrievance {
   return {
@@ -97,6 +115,11 @@ export function toPublic(r: GrievanceRow): PublicGrievance {
 }
 
 export class GrievanceBoard extends DurableObject<Env> {
+  /** Whole-board counts: computed once per object lifetime, adjusted by each post and removal, never rescanned per read. */
+  private stats: BoardStats | null = null;
+  /** Every page served since the last change, serialized — exact, because every change passes through this object and clears it. */
+  private readonly pages = new PageMemo<string>(Number.POSITIVE_INFINITY);
+
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     const sql = this.ctx.storage.sql;
@@ -126,6 +149,7 @@ export class GrievanceBoard extends DurableObject<Env> {
     try {
       if (request.method === "GET" && path === "/list") return this.list(url);
       if (request.method === "GET" && path.startsWith("/item/")) return this.item(path.slice("/item/".length));
+      if (request.method === "GET" && path === "/allowance") return this.allowance(request);
       if (request.method === "POST" && path === "/submit") return this.submit((await request.json()) as SubmitBody);
       if (request.method === "GET" && path === "/moderation") return this.checkModerator(request);
       if (request.method === "DELETE" && path.startsWith("/item/")) return this.remove(request, path.slice("/item/".length));
@@ -136,12 +160,48 @@ export class GrievanceBoard extends DurableObject<Env> {
     }
   }
 
-  /** Newest first, `limit` at a time, `before` = the seq of the oldest item already shown. */
+  private newestSeq(): number {
+    return this.ctx.storage.sql.exec<{ n: number | null }>("SELECT MAX(seq) AS n FROM grievances").one().n ?? 0;
+  }
+
+  private boardStats(): BoardStats {
+    if (this.stats) return this.stats;
+    const byKind = Object.fromEntries(KINDS.map((k) => [k, 0])) as Record<Kind, number>;
+    let total = 0;
+    for (const r of this.ctx.storage.sql.exec<{ kind: string; n: number }>("SELECT kind, COUNT(*) AS n FROM grievances GROUP BY kind").toArray()) {
+      total += r.n;
+      if (r.kind in byKind) byKind[r.kind as Kind] = r.n;
+    }
+    this.stats = { total, byKind, newestSeq: this.newestSeq() };
+    return this.stats;
+  }
+
+  /**
+   * A post (+1) or a removal (−1) of `row`: the counts in memory move with it and every kept page is
+   * forgotten — the object handles one change at a time, so both stay exact.
+   */
+  private changed(row: GrievanceRow, delta: 1 | -1): void {
+    this.pages.clear();
+    if (!this.stats) return;
+    this.stats.total = Math.max(0, this.stats.total + delta);
+    if (row.kind in this.stats.byKind) this.stats.byKind[row.kind as Kind] = Math.max(0, this.stats.byKind[row.kind as Kind] + delta);
+    if (delta === 1) this.stats.newestSeq = Math.max(this.stats.newestSeq, row.seq);
+    else if (row.seq === this.stats.newestSeq) this.stats.newestSeq = this.newestSeq();
+  }
+
+  /**
+   * Newest first, `limit` at a time, `before` = the seq of the oldest item already shown. A page served
+   * since the last change is a lookup; a new one is one indexed query, and the counts come from memory.
+   */
   private list(url: URL): Response {
     const sql = this.ctx.storage.sql;
-    const limit = pageLimit(url.searchParams.get("limit"));
-    const before = pageCursor(url.searchParams.get("before"));
-    const kind = kindFilter(url.searchParams.get("kind"));
+    const { total, byKind, newestSeq } = this.boardStats();
+    const q = listQuery(url.searchParams);
+    q.before = canonicalCursor(q.before, newestSeq);
+    const key = listSearch(q);
+    const kept = this.pages.get(key, 0);
+    if (kept !== null) return jsonTextResponse(kept, { cacheControl: LIST_CACHE_CONTROL, headers: { "X-Board-Page": "kept" } });
+    const { limit, before, kind } = q;
     const where: string[] = [];
     const args: unknown[] = [];
     if (kind) {
@@ -155,10 +215,9 @@ export class GrievanceBoard extends DurableObject<Env> {
     const clause = where.length ? `WHERE ${where.join(" AND ")}` : "";
     const rows = sql.exec<GrievanceRow>(`SELECT * FROM grievances ${clause} ORDER BY seq DESC LIMIT ?`, ...args, limit + 1).toArray();
     const page = rows.slice(0, limit);
-    const total = sql.exec<{ n: number }>(`SELECT COUNT(*) AS n FROM grievances${kind ? " WHERE kind = ?" : ""}`, ...(kind ? [kind] : [])).one().n;
-    const byKind = Object.fromEntries(KINDS.map((k) => [k, 0])) as Record<Kind, number>;
-    for (const r of sql.exec<{ kind: string; n: number }>("SELECT kind, COUNT(*) AS n FROM grievances GROUP BY kind").toArray()) if (r.kind in byKind) byKind[r.kind as Kind] = r.n;
-    return jsonResponse({ items: page.map(toPublic), next: rows.length > limit ? page[page.length - 1].seq : null, total, byKind });
+    const body = JSON.stringify({ items: page.map(toPublic), next: rows.length > limit ? page[page.length - 1].seq : null, total: kind ? byKind[kind] : total, byKind });
+    this.pages.set(key, body, 0);
+    return jsonTextResponse(body, { cacheControl: LIST_CACHE_CONTROL, headers: { "X-Board-Page": "queried" } });
   }
 
   private item(id: string): Response {
@@ -212,14 +271,32 @@ export class GrievanceBoard extends DurableObject<Env> {
     return null;
   }
 
+  /**
+   * The verdict alone, asked by the Worker before a submission's body is read: a caller over a limit
+   * costs this object a few indexed counts and nothing else — no JPEG parse, no photo write, no
+   * cleanup. Read-only: an attempt is not a post, so nothing is counted here, and submit() repeats the
+   * check in the same turn as its insert, so this answer never admits a post by itself.
+   */
+  private async allowance(request: Request): Promise<Response> {
+    const now = Date.now();
+    const client = request.headers.get("X-Grievance-Client");
+    const key = client ? await this.dailyKey(client, now) : null;
+    const wait = this.postAllowance(key, now);
+    return wait === null ? jsonResponse({ ok: true }) : tooMany(wait);
+  }
+
   private async submit(body: SubmitBody): Promise<Response> {
     const sql = this.ctx.storage.sql;
     if (!body || typeof body.id !== "string" || !UUID.test(body.id) || !body.submission) return errorResponse("The grievance could not be read.", 400);
+    // The Worker has already refused a submission without its photo; the store refuses it too, so no
+    // caller of this object can add a photo-less row.
+    const photo = body.photo;
+    if (!photo || !Number.isInteger(photo.width) || !Number.isInteger(photo.height) || !Number.isInteger(photo.bytes) || photo.width <= 0 || photo.height <= 0 || photo.bytes <= 0) return errorResponse(PHOTO_REQUIRED, 400);
     const now = Date.now();
     const key = body.client === null ? null : await this.dailyKey(body.client, now);
     this.prune(now);
     const wait = this.postAllowance(key, now);
-    if (wait !== null) return errorResponse("Too many grievances from here for now — try again later.", 429, null, { "Retry-After": String(wait) });
+    if (wait !== null) return tooMany(wait);
     const s = body.submission;
     const p = s.place;
     const filedAt = Math.floor(now / MINUTE) * MINUTE;
@@ -236,14 +313,15 @@ export class GrievanceBoard extends DurableObject<Env> {
       p?.junction?.id ?? null,
       p?.junction?.name ?? null,
       p?.junction?.distanceM ?? null,
-      body.photo?.width ?? null,
-      body.photo?.height ?? null,
-      body.photo?.bytes ?? null,
+      photo.width,
+      photo.height,
+      photo.bytes,
       filedAt,
     );
     sql.exec("INSERT INTO global_posts (at) VALUES (?)", now);
     if (key !== null) sql.exec("INSERT INTO client_posts (day, client, at) VALUES (?, ?, ?)", utcDay(now), key, now);
     const row = sql.exec<GrievanceRow>("SELECT * FROM grievances WHERE id = ?", body.id).one();
+    this.changed(row, 1);
     return jsonResponse(toPublic(row), { status: 201 });
   }
 
@@ -280,6 +358,7 @@ export class GrievanceBoard extends DurableObject<Env> {
     const row = sql.exec<GrievanceRow>("SELECT * FROM grievances WHERE id = ?", id).toArray()[0];
     if (!row) return errorResponse("not found", 404);
     sql.exec("DELETE FROM grievances WHERE id = ?", id);
+    this.changed(row, -1);
     return jsonResponse({ removed: id, hadPhoto: row.photo_bytes !== null });
   }
 }

@@ -10,7 +10,7 @@ import { usePageTitle } from "@/hooks/usePageTitle";
 import { findIntersection, useIntersectionDataset } from "@/lib/data/dataset";
 import type { Intersection } from "@/lib/data/types";
 import { apiErrorMessage, postGrievance } from "@/lib/grievance/api";
-import { fmtBytes, GRIEVANCE_KINDS, isGrievanceKind, junctionPlace, toSubmission, validateGrievance, WORDS_MAX, type BoardGrievance, type GrievanceDraft, type GrievanceKind, type GrievancePhoto, type GrievancePlace } from "@/lib/grievance/grievance";
+import { fmtBytes, GRIEVANCE_KINDS, isGrievanceKind, junctionPlace, PHOTO_REQUIRED, toSubmission, validateGrievance, WORDS_MAX, type BoardGrievance, type GrievanceDraft, type GrievanceKind, type GrievancePhoto, type GrievancePlace } from "@/lib/grievance/grievance";
 import { photoErrorMessage, shrinkPhoto } from "@/lib/grievance/photo";
 import { useIsFramed } from "@/lib/system/frame";
 import { cn } from "@/lib/utils";
@@ -20,8 +20,9 @@ const EMPTY: readonly Intersection[] = [];
 
 /**
  * /grievance — what you face on the road: a pothole, a footpath that stops, standing water, nowhere to
- * cross, a signal or a light out. A photo, the place, or both, posted without an account to the public
- * board at /grievances. The form does not request identity, but visible content can still identify people.
+ * cross, a signal or a light out. A photo of it — every grievance carries one (user decision 2026-09-13)
+ * — with the place when it can be marked, posted without an account to the public board at /grievances.
+ * The form does not request identity, but visible content can still identify people.
  */
 export default function GrievancePage() {
   usePageTitle("Grievance");
@@ -65,10 +66,13 @@ export default function GrievancePage() {
     return () => URL.revokeObjectURL(url);
   }, [photo]);
 
-  const validation = validateGrievance(draft, place, photo !== null);
+  const validation = validateGrievance(draft, photo !== null);
 
   const post = useMutation({
-    mutationFn: () => postGrievance(toSubmission(draft, place), photo),
+    mutationFn: () => {
+      if (!photo) throw new Error(PHOTO_REQUIRED);
+      return postGrievance(toSubmission(draft, place), photo);
+    },
     onSuccess: (g) => {
       setPosted(g);
       setDraft({ kind: draft.kind, message: "", website: "" });
@@ -123,7 +127,7 @@ export default function GrievancePage() {
             <b>06</b> · grievances · file one
           </div>
           <h1 className="mt-2 text-[30px] font-semibold tracking-[-0.01em] text-gw-text">File a grievance</h1>
-          <p className="mt-2 max-w-[62ch] text-[13.5px] text-gw-secondary">A photo, the place, or both. It goes on the public board without an account. The post itself may identify a person or private place.</p>
+          <p className="mt-2 max-w-[62ch] text-[13.5px] text-gw-secondary">A photo of it, and the place if you can mark it. It goes on the public board without an account. The post itself may identify a person or private place.</p>
         </header>
 
         <form
@@ -136,12 +140,17 @@ export default function GrievancePage() {
           noValidate
         >
           <div className="space-y-6">
-            <section className="panel p-4 sm:p-5" aria-labelledby={`${id}-photo`}>
-              <h2 id={`${id}-photo`} className="text-[15px] font-semibold text-gw-text">
-                Photo
-              </h2>
+            <section className={cn("panel p-4 sm:p-5", touched && !photo && "border-gw-ember")} aria-labelledby={`${id}-photo`} aria-describedby={`${id}-photo-need`}>
+              <div className="flex items-baseline justify-between gap-3">
+                <h2 id={`${id}-photo`} className="text-[15px] font-semibold text-gw-text">
+                  Photo
+                </h2>
+                <span id={`${id}-photo-need`} className={cn("label", photo ? "text-gw-orange" : touched ? "text-gw-ember" : undefined)}>
+                  {photo ? "attached" : "required"}
+                </span>
+              </div>
               <div className="rule mt-3" aria-hidden />
-              <p className="mt-3 text-[12px] leading-relaxed text-gw-secondary">Before posting, crop or avoid faces, vehicle plates, house numbers, documents, and other identifying details. Metadata is removed, but visible pixels are not blurred.</p>
+              <p className="mt-3 text-[12px] leading-relaxed text-gw-secondary">Every grievance carries a photo of what is wrong. Before posting, crop or avoid faces, vehicle plates, house numbers, documents, and other identifying details. Metadata is removed, but visible pixels are not blurred.</p>
               {/* The operating system's picker does the capturing: no live camera, no permission prompt of ours. */}
               <input ref={cameraInput} type="file" accept="image/*" capture="environment" className="hidden" tabIndex={-1} aria-hidden onChange={onFile} />
               <input ref={fileInput} type="file" accept="image/*" className="hidden" tabIndex={-1} aria-hidden onChange={onFile} />
@@ -189,9 +198,12 @@ export default function GrievancePage() {
             </section>
 
             <section className="panel p-4 sm:p-5" aria-labelledby={`${id}-place`}>
-              <h2 id={`${id}-place`} className="text-[15px] font-semibold text-gw-text">
-                Place
-              </h2>
+              <div className="flex items-baseline justify-between gap-3">
+                <h2 id={`${id}-place`} className="text-[15px] font-semibold text-gw-text">
+                  Place
+                </h2>
+                <span className="label">optional</span>
+              </div>
               <div className="rule mt-3" aria-hidden />
               {dataset.isError && (
                 <p className="mt-3 text-[12px] text-gw-ember" role="alert">
@@ -233,7 +245,7 @@ export default function GrievancePage() {
               </label>
 
               <label className="block">
-                <span className="label">In your words{draft.kind === "other" && !photo ? "" : " (optional)"}</span>
+                <span className="label">In your words (optional)</span>
                 <textarea value={draft.message} onChange={(e) => edit({ message: e.target.value })} onBlur={() => setTouched(true)} rows={5} maxLength={WORDS_MAX + 200} placeholder="What it is, since when, who it affects." className="mt-1 w-full resize-y rounded-[4px] border border-gw-border bg-gw-card px-3 py-2.5 text-[14px] leading-relaxed text-gw-text outline-none placeholder:text-gw-muted focus:border-gw-orange" />
                 <span className="mono mt-1 block text-right text-[11px] text-gw-muted">
                   {draft.message.trim().length.toLocaleString("en-IN")} / {WORDS_MAX.toLocaleString("en-IN")}

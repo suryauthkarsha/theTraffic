@@ -39,7 +39,9 @@ export default function IntersectionPage() {
   const dataset = useIntersectionDataset();
   const model = useSignalModel();
   const inter = findIntersection(dataset.data, id);
-  usePageTitle(dataset.isLoading ? undefined : inter ? inter.canonical_name : "Junction"); // no title (and no page view) until the junction's name is known
+  // No title (and no page view) until the junction's name is known; a failed load leaves the pre-rendered head
+  // as it is rather than calling the junction missing; null = not on file (noindex).
+  usePageTitle(dataset.isLoading || dataset.isError ? undefined : inter ? inter.canonical_name : null);
   const [approachPick, setApproachPick] = useState<string | null>(null);
   // The small map is keyed by junction id and reports back with the id it was built for, so moving
   // between junction pages never draws one junction's corridors on another's map.

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import type { Intersection } from "@/lib/data/types";
 
 import { grievanceApiBase, DEFAULT_GRIEVANCE_API } from "./api";
-import { boardLink, containsContactDetails, fmtBoardTime, formatBoardGrievance, GRIEVANCE_KINDS, insideBengaluru, isGrievanceKind, junctionPlace, kindLabel, kindShort, NEAREST_JUNCTION_M, osmLink, placeAt, toSubmission, validateGrievance, type BoardGrievance, type GrievanceDraft } from "./grievance";
+import { boardLink, containsContactDetails, fmtBoardTime, formatBoardGrievance, GRIEVANCE_KINDS, insideBengaluru, isGrievanceKind, junctionPlace, kindLabel, kindShort, NEAREST_JUNCTION_M, osmLink, PHOTO_REQUIRED, placeAt, toSubmission, validateGrievance, type BoardGrievance, type GrievanceDraft } from "./grievance";
 import { fitScale, qualityLadder } from "./photo";
 
 const junction = (id: string, name: string, lon: number, lat: number): Intersection => ({ id, canonical_name: name, lat, lon, intersection_type: "junction", control_type: "unknown", control_type_source: "none", osm_node_ids: [], node_count: 1, spread_m: 0, cluster_confidence: 1, score_components: {}, review_needed: false, verified: false, road_names: [], osm_tags: {}, approaches: [] });
@@ -45,24 +45,29 @@ describe("a grievance's place", () => {
 });
 
 describe("validating a grievance (the browser's copy of the board's rules)", () => {
-  it("needs a photo or a place; a named kind plus the place is complete on its own", () => {
-    expect(validateGrievance(draft(), null, false)).toBe("Add a photo, or mark the place on the map.");
-    expect(validateGrievance(draft(), junctionPlace(SILK_BOARD), false)).toBeNull(); // "Pothole" + where
-    expect(validateGrievance(draft({ kind: "crossing" }), placeAt([77.7, 12.85], "map", ALL), false)).toBeNull(); // "No safe way to cross" IS the report
-    expect(validateGrievance(draft(), null, true)).toBeNull(); // a photo alone
+  it("needs a photo — always (user decision 2026-09-13); neither the place nor the words stand in for it", () => {
+    expect(validateGrievance(draft(), false)).toBe(PHOTO_REQUIRED);
+    expect(PHOTO_REQUIRED).toBe("Add a photo — every grievance needs one.");
+    expect(validateGrievance(draft({ message: "Deep pothole at the stop line, two-wheelers swerve into the bus lane." }), false)).toBe(PHOTO_REQUIRED); // words alone are not enough
+    expect(validateGrievance(draft({ kind: "crossing" }), true)).toBeNull(); // "No safe way to cross" with its picture IS the report
+    expect(validateGrievance(draft(), true)).toBeNull(); // a photo alone: the place and the words are optional
   });
 
-  it("'Something else' needs a photo or ten characters saying what", () => {
-    const place = junctionPlace(SILK_BOARD);
-    expect(validateGrievance(draft({ kind: "other" }), place, false)).toBe("Say what it is in at least 10 characters, or add a photo.");
-    expect(validateGrievance(draft({ kind: "other", message: "Hawkers on the carriageway" }), place, false)).toBeNull();
-    expect(validateGrievance(draft({ kind: "other" }), place, true)).toBeNull();
+  it("the photo rule comes before every other sentence except the honeypot's, so the form asks for the photo first", () => {
+    expect(validateGrievance(draft({ message: "x".repeat(2001) }), false)).toBe(PHOTO_REQUIRED);
+    expect(validateGrievance(draft({ message: "ring 9876543210" }), false)).toBe(PHOTO_REQUIRED);
+    expect(validateGrievance(draft({ website: "http://spam" }), false)).toBe("Please leave the hidden field empty.");
+  });
+
+  it("'Something else' is complete with its photo alone — no minimum words any more", () => {
+    expect(validateGrievance(draft({ kind: "other" }), true)).toBeNull();
+    expect(validateGrievance(draft({ kind: "other", message: "Hawkers on the carriageway" }), true)).toBeNull();
+    expect(validateGrievance(draft({ kind: "other", message: "Hawkers on the carriageway" }), false)).toBe(PHOTO_REQUIRED);
   });
 
   it("caps the words and refuses a filled honeypot", () => {
-    const place = junctionPlace(SILK_BOARD);
-    expect(validateGrievance(draft({ message: "x".repeat(2001) }), place, false)).toMatch(/Keep it under 2,000 characters/);
-    expect(validateGrievance(draft({ website: "http://spam" }), place, true)).toBe("Please leave the hidden field empty.");
+    expect(validateGrievance(draft({ message: "x".repeat(2001) }), true)).toMatch(/Keep it under 2,000 characters/);
+    expect(validateGrievance(draft({ website: "http://spam" }), true)).toBe("Please leave the hidden field empty.");
   });
 
   it("refuses words that carry a phone number or an e-mail address because the board is public", () => {
@@ -70,7 +75,7 @@ describe("validating a grievance (the browser's copy of the board's rules)", () 
     expect(containsContactDetails("+91-98765-43210")).toBe(true);
     expect(containsContactDetails("me@example.org")).toBe(true);
     expect(containsContactDetails("Bus 500D stops 20 m past the line at 8:45 am")).toBe(false);
-    expect(validateGrievance(draft({ message: "Water every rain, ring 9876543210" }), junctionPlace(SILK_BOARD), false)).toBe("Leave out phone numbers and e-mail addresses — the board is public.");
+    expect(validateGrievance(draft({ message: "Water every rain, ring 9876543210" }), true)).toBe("Leave out phone numbers and e-mail addresses — the board is public.");
   });
 });
 

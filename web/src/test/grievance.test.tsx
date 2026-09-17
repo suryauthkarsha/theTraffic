@@ -37,6 +37,21 @@ describe("the Grievance form (an account-free public board of what people face o
     expect(activeTab("/grievances?kind=pothole")).toBe(SUPPORT_TAB);
   });
 
+  it("requires the photo — every grievance carries one (user decision 2026-09-13) — and says so before a press; the place and the words are optional", () => {
+    const html = render(<GrievancePage />);
+    expect(html).toContain("A photo of it, and the place if you can mark it."); // the header sentence
+    expect(html).toMatch(/Photo<\/h2><span[^>]*class="label"[^>]*>required<\/span>/); // the panel's own tag, before any press
+    expect(html).toMatch(/Place<\/h2><span class="label">optional<\/span>/);
+    expect(html).toContain("In your words (optional)");
+    expect(html).toContain("Every grievance carries a photo of what is wrong.");
+    expect(html).not.toContain("or both"); // the old "a photo, the place, or both" is gone
+    expect(pageSource).toContain("validateGrievance(draft, photo !== null)"); // the rule is the shared one, not a copy
+    expect(pageSource).toContain('{photo ? "attached" : "required"}');
+    expect(pageSource).toContain("if (!photo) throw new Error(PHOTO_REQUIRED);"); // the mutation refuses without one even if the button were pressed
+    expect(apiSource).toContain("photo: GrievancePhoto,"); // the API's type admits no photo-less post
+    expect(apiSource).not.toContain("if (photo) form.set");
+  });
+
   it("offers a photo two ways — take one (touch screens) or choose one — through the operating system's picker, never a live camera", () => {
     const html = render(<GrievancePage />);
     expect(html).toContain('accept="image/*" capture="environment"'); // the camera path is the OS picker with the rear camera preferred

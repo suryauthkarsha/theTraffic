@@ -4,6 +4,7 @@ import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv, type Plugin } from "vite";
 
+import { buildSitemap, prerenderPages } from "./src/lib/system/prerender.ts";
 import { parseMailbox } from "./src/lib/support/mailbox.ts";
 
 /**
@@ -45,6 +46,14 @@ const GA_HOSTS = {
   img: ["https://*.google-analytics.com", "https://www.googletagmanager.com"],
   connect: ["https://*.google-analytics.com", "https://*.analytics.google.com", "https://www.googletagmanager.com"],
 };
+
+/**
+ * DataFast (user request 2026-09-13): its loader and its one collection endpoint (`/api/events`, an
+ * XMLHttpRequest) share this origin, so it joins script-src and connect-src on every build — the site
+ * always measures with it; `lib/system/analytics.ts` holds the website id and loads from this same
+ * origin (`security.test.ts` pins the two together). It sends no pixel, so img-src is untouched.
+ */
+const DATAFAST_ORIGIN = "https://datafa.st";
 
 /** Env names that hold credentials or vendor identifiers; their values must never appear in the output. */
 const SENSITIVE_NAME = /(KEY|TOKEN|SECRET|PASSWORD|PASS|PRIVATE|CREDENTIAL|SUPABASE|MAPBOX|TOMTOM|EMAIL|API)/i;
@@ -91,11 +100,14 @@ function originOf(url: string | undefined): string | null {
  *   font     this origin only — IBM Plex is bundled (@fontsource), so no font request leaves the site
  *   connect  this origin (the JSON datasets; the host's same-origin /__logs socket) + the basemap style
  *            host + the imagery host + the grievance board's Worker (the one server of ours, since
- *            2026-09-11: VITE_GRIEVANCE_API_URL or the project default) — nowhere else can data be sent
- *   img      the same hosts plus data: / blob: for MapLibre's sprites and decoded tiles (the board's
- *            photos come from the Worker's origin)
- *   analytics  only when VITE_GA_MEASUREMENT_ID holds a GA4 id: the Google tag loader joins script-src and
- *            the GA4 collection hosts join connect-src / img-src (GA_HOSTS). No id, no Google host.
+ *            2026-09-11: VITE_GRIEVANCE_API_URL or the project default) + DataFast's origin (its page-view
+ *            endpoint) — nowhere else can data be sent
+ *   img      the same hosts (DataFast excepted) plus data: / blob: for MapLibre's sprites and decoded
+ *            tiles (the board's photos come from the Worker's origin)
+ *   analytics  DataFast's origin joins script-src and connect-src on every build (DATAFAST_ORIGIN; the site
+ *            always measures with it). Only when VITE_GA_MEASUREMENT_ID holds a GA4 id: the Google tag
+ *            loader joins script-src and the GA4 collection hosts join connect-src / img-src (GA_HOSTS).
+ *            No id, no Google host.
  *   frame / object / base-uri / form-action  nothing embedded, no plugins, no <base> hijack, forms post
  *            only to this origin (being framed BY the Rork preview is a header matter meta CSP cannot touch)
  * Another basemap or imagery host is allowed by pointing VITE_MAP_STYLE_URL / VITE_SATELLITE_TILE_URL at
@@ -112,12 +124,12 @@ function csp(env: Record<string, string>): Plugin {
     "object-src 'none'",
     "frame-src 'none'",
     "form-action 'self'",
-    `script-src 'self'${SERVED_AS_BUILT ? "" : ` 'unsafe-inline' ${REACT_GRAB_SRC}`}${ga("script")}`,
+    `script-src 'self'${SERVED_AS_BUILT ? "" : ` 'unsafe-inline' ${REACT_GRAB_SRC}`} ${DATAFAST_ORIGIN}${ga("script")}`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "font-src 'self'",
     `img-src 'self' data: blob: ${hosts.join(" ")}${ga("img")}`,
-    `connect-src 'self' ${hosts.join(" ")}${ga("connect")}`,
+    `connect-src 'self' ${hosts.join(" ")} ${DATAFAST_ORIGIN}${ga("connect")}`,
     "manifest-src 'self'",
   ].join("; ");
   return {
@@ -160,64 +172,45 @@ function envHygiene(env: Record<string, string>): Plugin {
   };
 }
 
-/** The public origin for the sitemap: `VITE_SITE_URL` when it is an https origin, else the project's host. */
+/** The public origin for the sitemap and the pre-rendered pages: `VITE_SITE_URL` when it is an https origin, else the site's own domain (`lib/system/routeMeta.ts` holds the same default). */
 const DEFAULT_SITE_URL = "https://www.thetraffic.in";
 function siteOrigin(env: Record<string, string>): string {
   const o = originOf(env.VITE_SITE_URL);
   return o && o.startsWith("https://") ? o : DEFAULT_SITE_URL;
 }
 
-/** The screens a search engine should list, with how often each changes. Junction pages are added from the dataset. */
-const SITEMAP_ROUTES: { path: string; changefreq: "daily" | "weekly" | "monthly"; priority: string }[] = [
-  { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/signals", changefreq: "weekly", priority: "0.9" },
-  { path: "/grievances", changefreq: "daily", priority: "0.9" },
-  { path: "/grievance", changefreq: "monthly", priority: "0.7" },
-  { path: "/helmet", changefreq: "monthly", priority: "0.8" },
-  { path: "/surveillance", changefreq: "weekly", priority: "0.8" },
-  { path: "/research", changefreq: "weekly", priority: "0.6" },
-  { path: "/methodology", changefreq: "monthly", priority: "0.5" },
-  { path: "/support", changefreq: "monthly", priority: "0.4" },
-  { path: "/console", changefreq: "monthly", priority: "0.4" },
-];
-
-const xmlEscape = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
-
-/**
- * `sitemap.xml`, emitted at build from the routes above plus one entry per junction in the signal
- * dataset (the junction id is the URL; the dataset's OSM base date is every junction's lastmod), so
- * the sitemap never drifts from the pages the site actually has. Pure given the dataset text.
- */
-export function buildSitemap(origin: string, datasetJson: string, today: string): string {
-  let junctions: { id: string }[] = [];
-  let lastmod = today;
+/** A shipped dataset's text, for the sitemap, the junction pages and the Dataset records; empty when it is missing (the static screens alone). */
+function datasetText(file: string): string {
   try {
-    const data = JSON.parse(datasetJson) as { meta?: { source?: { osm_timestamp_base?: string } }; intersections?: { id: string }[] };
-    junctions = (data.intersections ?? []).filter((i) => /^gw-[0-9a-f]{12}$/.test(i.id));
-    const base = data.meta?.source?.osm_timestamp_base;
-    if (typeof base === "string" && /^\d{4}-\d{2}-\d{2}/.test(base)) lastmod = base.slice(0, 10);
+    return readFileSync(path.resolve(import.meta.dirname, "public/data", file), "utf8");
   } catch {
-    /* no dataset: the static routes alone */
+    return "";
   }
-  const rows = [
-    ...SITEMAP_ROUTES.map((r) => `  <url><loc>${xmlEscape(origin + r.path)}</loc><lastmod>${today}</lastmod><changefreq>${r.changefreq}</changefreq><priority>${r.priority}</priority></url>`),
-    ...junctions.map((j) => `  <url><loc>${xmlEscape(`${origin}/intersection/${j.id}`)}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>`),
-  ];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`;
 }
 
-function sitemap(env: Record<string, string>): Plugin {
+/**
+ * Search pages (user request 2026-09-13: "improve SEO"; `lib/system/prerender.ts`). After Vite has
+ * written the finished index.html — policy injected, chunks hashed — the build adds one copy of it per
+ * screen and per junction (`signals/index.html`, `intersection/<id>/index.html`, …) with that page's
+ * own title, description, canonical link, share tags and JSON-LD, so a crawler that runs no script
+ * reads the right head at every address instead of the home page's, and `sitemap.xml` from the same
+ * table so it never drifts from the pages the site has. The root index.html stays the home page and
+ * the rewrite fallback. `enforce: "post"` so the pages are copies of the FINISHED template — and the
+ * hygiene gate, also post, still scans every one of them (it runs after this plugin in registration order).
+ */
+function searchPages(env: Record<string, string>): Plugin {
   return {
-    name: "thetraffic:sitemap",
+    name: "thetraffic:search-pages",
     apply: "build",
-    generateBundle() {
-      let dataset = "";
-      try {
-        dataset = readFileSync(path.resolve(import.meta.dirname, "public/data/intersections.v1.json"), "utf8");
-      } catch {
-        /* the static routes alone */
-      }
-      this.emitFile({ type: "asset", fileName: "sitemap.xml", source: buildSitemap(siteOrigin(env), dataset, new Date().toISOString().slice(0, 10)) });
+    enforce: "post",
+    generateBundle(_options, bundle) {
+      const index = bundle["index.html"];
+      if (!index || index.type !== "asset") throw new Error("[thetraffic] index.html is not in the bundle; nothing to pre-render from");
+      const template = typeof index.source === "string" ? index.source : new TextDecoder().decode(index.source);
+      const origin = siteOrigin(env);
+      const texts = { intersections: datasetText("intersections.v1.json"), cameras: datasetText("surveillance_cameras.v1.json") };
+      for (const page of prerenderPages(template, origin, texts)) this.emitFile({ type: "asset", fileName: page.fileName, source: page.source });
+      this.emitFile({ type: "asset", fileName: "sitemap.xml", source: buildSitemap(origin, texts.intersections) });
     },
   };
 }
@@ -234,7 +227,7 @@ export default defineConfig(({ mode }) => {
         overlay: false,
       },
     },
-    plugins: [react(), csp(env), sitemap(env), envHygiene(env)],
+    plugins: [react(), csp(env), searchPages(env), envHygiene(env)],
     resolve: {
       alias: {
         "@": path.resolve(import.meta.dirname, "./src"),

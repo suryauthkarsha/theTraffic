@@ -6,8 +6,9 @@ import { BRAND_NAME } from "@/lib/system/brand";
 /**
  * Grievances (user request 2026-09-11): what people face on Bengaluru's roads — a pothole, a footpath
  * that stops, water that stands, nowhere safe to cross, a signal out, a street light dark — filed from
- * /grievance with a photo, a place, or both, and collected on the public board at /grievances so they
- * can be shown together to the people who can act on them.
+ * /grievance with a photo — always (user decision 2026-09-13) — and the place when it can be marked, and
+ * collected on the public board at /grievances so they can be shown together to the people who can act
+ * on them.
  *
  * The form requests no identity or contact field. Phone-number and e-mail patterns are refused before
  * submission, and the photo is re-encoded to drop camera metadata. Visible words, pixels, precise
@@ -29,8 +30,10 @@ export const GRIEVANCE_KINDS: { id: GrievanceKind; label: string; short: string 
   { id: "other", label: "Something else on the road", short: "Other" },
 ];
 
-export const WORDS_MIN = 10;
 export const WORDS_MAX = 2000;
+
+/** The one sentence for a grievance without its photo — the same words the board answers with. */
+export const PHOTO_REQUIRED = "Add a photo — every grievance needs one.";
 
 /** Longest edge of the photo after shrinking — enough to read a pothole or a signal head, light enough to post. */
 export const PHOTO_MAX_EDGE = 1280;
@@ -166,16 +169,15 @@ export function containsContactDetails(text: string): boolean {
 }
 
 /**
- * Validation sentence, or null when the grievance can be posted. A photo or a place — either is enough
- * (a named kind plus the place is a complete grievance: "No safe way to cross" IS the report); "Something
- * else" needs a photo or a few words to say what. Words carrying a phone number or an e-mail address are
- * refused because the board is public. Pure.
+ * Validation sentence, or null when the grievance can be posted. Every grievance carries a photo —
+ * neither the place nor the words stand in for it; a named kind plus its photo is a complete grievance
+ * ("No safe way to cross" with the picture IS the report), and the place and the words are optional.
+ * Words carrying a phone number or an e-mail address are refused because the board is public. Pure.
  */
-export function validateGrievance(d: GrievanceDraft, place: GrievancePlace | null, hasPhoto: boolean): string | null {
+export function validateGrievance(d: GrievanceDraft, hasPhoto: boolean): string | null {
   if (d.website.trim()) return "Please leave the hidden field empty.";
-  if (!place && !hasPhoto) return "Add a photo, or mark the place on the map.";
+  if (!hasPhoto) return PHOTO_REQUIRED;
   const words = d.message.trim();
-  if (d.kind === "other" && !hasPhoto && words.length < WORDS_MIN) return `Say what it is in at least ${WORDS_MIN} characters, or add a photo.`;
   if (words.length > WORDS_MAX) return `Keep it under ${WORDS_MAX.toLocaleString("en-IN")} characters (${words.length.toLocaleString("en-IN")} now).`;
   if (containsContactDetails(words)) return "Leave out phone numbers and e-mail addresses — the board is public.";
   return null;

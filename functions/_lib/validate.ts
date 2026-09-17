@@ -12,8 +12,8 @@ export const PLACE_SOURCES = ["map", "device", "junction"] as const;
 export type PlaceSource = (typeof PLACE_SOURCES)[number];
 
 export const WORDS_MAX = 2000;
-/** "Something else" needs a photo or this many characters saying what. */
-export const WORDS_MIN_OTHER = 10;
+/** Every grievance carries a photo (user decision 2026-09-13) — the same sentence the form shows. */
+export const PHOTO_REQUIRED = "Add a photo — every grievance needs one.";
 export const JUNCTION_NAME_MAX = 120;
 /** The browser shrinks a photo to 1280 px and steps the JPEG quality down until it fits well under this. */
 export const PHOTO_MAX_BYTES = 400 * 1024;
@@ -110,7 +110,8 @@ function parsePlace(raw: unknown): SubmittedPlace | null | "bad" {
 
 /**
  * The submitted JSON → a `Submission`, or the plain sentence the form shows. `hasPhoto` says whether a
- * valid JPEG arrived alongside. The honeypot (`website`) must be empty.
+ * file arrived alongside — every grievance carries one, and neither the place nor the words stand in
+ * for it; both of those are optional. The honeypot (`website`) must be empty.
  */
 export function parseSubmission(raw: unknown, hasPhoto: boolean): ParseResult {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return refuse("The grievance could not be read.");
@@ -118,13 +119,12 @@ export function parseSubmission(raw: unknown, hasPhoto: boolean): ParseResult {
   if (typeof r.website === "string" && r.website.trim()) return refuse("Please leave the hidden field empty.");
   if (typeof r.kind !== "string" || !(KINDS as readonly string[]).includes(r.kind)) return refuse("Pick what the grievance is about.");
   const kind = r.kind as Kind;
+  if (!hasPhoto) return refuse(PHOTO_REQUIRED);
   const words = cleanText(r.words, WORDS_MAX + 1);
   if (words.length > WORDS_MAX) return refuse(`Keep it under ${WORDS_MAX.toLocaleString("en-IN")} characters.`);
   if (containsContactDetails(words)) return refuse("Leave out phone numbers and e-mail addresses — the board is public.");
   const place = parsePlace(r.place);
   if (place === "bad") return refuse("The place could not be read — mark it on the map again.");
-  if (!place && !hasPhoto) return refuse("Add a photo, or mark the place on the map.");
-  if (kind === "other" && !hasPhoto && words.length < WORDS_MIN_OTHER) return refuse(`Say what it is in at least ${WORDS_MIN_OTHER} characters, or add a photo.`);
   return { ok: true, value: { kind, words, place } };
 }
 

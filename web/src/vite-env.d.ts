@@ -18,6 +18,6 @@ interface ImportMetaEnv {
   readonly VITE_GA_MEASUREMENT_ID?: string;
   /** The grievance board's Worker origin; absent = the project's own Worker (`lib/grievance/api.ts`). */
   readonly VITE_GRIEVANCE_API_URL?: string;
-  /** The canonical public origin (`https://thetraffic.example`), for canonical links and the sitemap; absent = derived at runtime. */
+  /** The canonical public origin, for canonical links and the sitemap; absent = the site's own domain, `https://www.thetraffic.in` (`lib/system/seo.ts`). */
   readonly VITE_SITE_URL?: string;
 }

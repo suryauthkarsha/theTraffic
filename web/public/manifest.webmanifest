@@ -20,6 +20,6 @@
   "shortcuts": [
     { "name": "Signal Map", "url": "/signals", "description": "Mapped traffic signals in the shipped Bengaluru dataset" },
     { "name": "Grievances", "url": "/grievances", "description": "What people face on the road" },
-    { "name": "File a grievance", "url": "/grievance", "description": "Post a photo, the place, or both without an account" }
+    { "name": "File a grievance", "url": "/grievance", "description": "Post a photo of a road problem, with the place, without an account" }
   ]
 }

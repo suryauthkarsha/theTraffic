@@ -1,19 +1,30 @@
 /**
- * Google Analytics 4 (user request 2026-09-09) — the one thing the site measures: its own audience.
+ * The site's audience counters — the one thing it measures. Two, both page views only, neither
+ * anything typed:
  *
- * The Google tag loads only when a measurement id is configured at build time
- * (`VITE_GA_MEASUREMENT_ID`) and the visitor's browser does not send Global Privacy Control. Without
- * an id nothing is loaded and nothing is sent — and `vite.config.ts` adds the Google hosts to the
- * Content Security Policy only when the id is present, so the policy never names a host the build
- * does not use. There is no inline snippet: this module inserts the tag as a script element, so the
- * policy needs neither a nonce nor a hash.
+ * DataFast (user request 2026-09-13), on for every build. The website id and root domain below are
+ * the ones from the snippet the owner pasted; a website id is public by design (it stands in the page
+ * of every DataFast site and can only receive page views), so it lives here rather than in the
+ * environment. `installDataFast` inserts the script into <head> as an element — the way DataFast's
+ * own React Router guide installs it — so the policy needs no inline allowance and names
+ * `https://datafa.st` instead (`vite.config.ts`). DataFast counts on its own: a page view on load and
+ * one on every route change (it wraps `history.pushState` and listens for `popstate`), with the page
+ * address as it stands — path and query string — the referrer, viewport, screen, language and time
+ * zone, and a random visitor id and session id it keeps in first-party cookies (`datafast_*`). It
+ * stays off inside an embedded frame and on localhost by its own rules.
  *
- * Page views are sent by `usePageTitle` once a screen has set its title — one per path, with the
- * automatic page view switched off (`send_page_view: false`) so the two can never double count. The
- * address sent is the page's path without its query string: filters, support topics and references
- * stay out of Google's logs. Nothing a visitor types is ever sent.
+ * Google Analytics 4 (user request 2026-09-09), only when a measurement id is configured at build
+ * time (`VITE_GA_MEASUREMENT_ID`). Without an id nothing is loaded and nothing is sent — and
+ * `vite.config.ts` adds the Google hosts to the Content Security Policy only when the id is present,
+ * so the policy never names a host the build does not use. There is no inline snippet: this module
+ * inserts the tag as a script element, so the policy needs neither a nonce nor a hash. Page views
+ * are sent by `usePageTitle` once a screen has set its title — one per path, with the automatic page
+ * view switched off (`send_page_view: false`) so the two can never double count. The address sent is
+ * the page's path without its query string.
  *
- * Honesty: docs/PRIVACY.md and Support FAQ 4 say all of this in plain words.
+ * Neither loads for a visitor whose browser sends Global Privacy Control. Nothing a visitor types is
+ * ever sent by either — nothing typed reaches an address. Honesty: docs/PRIVACY.md and Support FAQ 4
+ * say all of this in plain words.
  */
 
 /** GA4 measurement ids: `G-` followed by upper-case letters and digits. */
@@ -22,18 +33,45 @@ const MEASUREMENT_ID = /^G-[A-Z0-9]{6,14}$/;
 /** The Google tag loader; the id is appended as `?id=`. */
 export const GTAG_SRC = "https://www.googletagmanager.com/gtag/js";
 
+/** DataFast's script — the `src` of the pasted snippet; `vite.config.ts` names the same origin in the policy. */
+export const DATAFAST_SRC = "https://datafa.st/js/script.js";
+/** The snippet's `data-website-id`: public by design, it can only receive page views. */
+export const DATAFAST_WEBSITE_ID = "dfid_1djEc6CVOc4IHEQzggumd";
+/** The snippet's `data-domain`: the site's root domain, which DataFast uses for its cookies across subdomains. */
+export const DATAFAST_DOMAIN = "thetraffic.in";
+
 /** Why analytics is or is not running. */
 export type AnalyticsState = "off" | "invalid_id" | "gpc" | "on";
 
+/** Why DataFast is or is not running: inserted now, refused for Global Privacy Control, or already in the page. */
+export type DataFastState = "on" | "gpc" | "present";
+
 type GtagFn = (...args: unknown[]) => void;
 
-/** The globals the Google tag reads. `globalPrivacyControl` is not in the DOM typings yet. */
+/** The globals the two counters need. `globalPrivacyControl` is not in the DOM typings yet. */
 interface AnalyticsWindow {
   dataLayer?: unknown[];
   gtag?: GtagFn;
   navigator: { globalPrivacyControl?: boolean };
   document: { title: string; head: HTMLHeadElement; createElement(tagName: "script"): HTMLScriptElement };
   location: { origin: string; pathname: string };
+}
+
+/**
+ * Inserts DataFast's script into <head> with the snippet's attributes — once, and never for a browser
+ * that sends Global Privacy Control. Call once before the first render; DataFast counts from there on
+ * by itself.
+ */
+export function installDataFast(win: AnalyticsWindow = window as unknown as AnalyticsWindow): DataFastState {
+  if (win.navigator.globalPrivacyControl === true) return "gpc";
+  if (win.document.head.querySelector(`script[src="${DATAFAST_SRC}"]`) !== null) return "present";
+  const script = win.document.createElement("script");
+  script.defer = true;
+  script.setAttribute("data-website-id", DATAFAST_WEBSITE_ID);
+  script.setAttribute("data-domain", DATAFAST_DOMAIN);
+  script.src = DATAFAST_SRC;
+  win.document.head.appendChild(script);
+  return "on";
 }
 
 /** Pure: normalises the id and decides. */

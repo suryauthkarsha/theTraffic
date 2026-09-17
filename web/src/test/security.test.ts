@@ -137,9 +137,26 @@ describe("security guard", () => {
     expect(cfg).toMatch(/enforce: "post"/); // the hygiene gate sees the finished index.html
   });
 
+  it("names the two audience counters exactly: DataFast's origin in script-src and connect-src (no pixel, so not img-src), loaded as an element from that same origin; Google's hosts only with an id", () => {
+    const cfg = read(path.join(WEB, "vite.config.ts"));
+    const analytics = read(path.join(WEB, "src/lib/system/analytics.ts"));
+    expect(cfg).toContain('const DATAFAST_ORIGIN = "https://datafa.st"');
+    expect(cfg).toMatch(/`script-src 'self'[^\n]*\$\{DATAFAST_ORIGIN\}/);
+    expect(cfg).toMatch(/`connect-src 'self'[^\n]*\$\{DATAFAST_ORIGIN\}/);
+    expect(cfg).not.toMatch(/`img-src[^\n]*DATAFAST/);
+    expect(analytics).toContain('export const DATAFAST_SRC = "https://datafa.st/js/script.js"'); // the policy names the origin the loader comes from
+    expect(analytics).toMatch(/export const DATAFAST_WEBSITE_ID = "dfid_[A-Za-z0-9]+"/); // a website id, public by design — never a key
+    expect(analytics).toContain('export const DATAFAST_DOMAIN = "thetraffic.in"');
+    expect(analytics).toMatch(/installDataFast\([\s\S]*globalPrivacyControl === true\) return "gpc"/); // GPC refuses it, as it does Google's tag
+    expect(analytics).not.toMatch(/innerHTML|textContent\s*=|text\s*=/); // an element with a src, never inline code
+    expect(read(path.join(WEB, "src/main.tsx"))).toMatch(/^installDataFast\(\);$/m);
+    // the Google hosts remain conditional on a configured id
+    expect(cfg).toMatch(/const ga = \(kind: keyof typeof GA_HOSTS\): string => \(analytics \? /);
+  });
+
   it("gives a Vercel deployment the _headers set plus a clickjacking rule, and rewrites only app routes", () => {
     type Header = { key: string; value: string };
-    const cfg = JSON.parse(read(path.join(WEB, "vercel.json"))) as { rewrites?: { source: string; destination: string }[]; headers?: { source: string; headers: Header[] }[] };
+    const cfg = JSON.parse(read(path.join(WEB, "vercel.json"))) as { trailingSlash?: boolean; rewrites?: { source: string; destination: string }[]; headers?: { source: string; headers: Header[] }[] };
     const site: Header[] = cfg.headers?.find((h) => h.source === "/(.*)")?.headers ?? [];
     const legacy = read(path.join(WEB, "public/_headers"));
     for (const h of site) {
@@ -153,6 +170,57 @@ describe("security guard", () => {
     expect(cfg.headers?.find((h) => h.source === "/assets/(.*)")?.headers).toEqual([{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }]);
     // Missing chunks and datasets must 404, not answer with the HTML page.
     expect(cfg.rewrites).toEqual([{ source: "/((?!assets/|data/).*)", destination: "/index.html" }]);
+    // One address per page: `/signals/` answers 308 to `/signals`, where the pre-rendered page lives (never two copies of a page in the index).
+    expect(cfg.trailingSlash).toBe(false);
+  });
+
+  it("pre-renders every screen from pure modules that touch no DOM, no environment and no app code, and adds only a JSON-LD data block", () => {
+    for (const file of ["src/lib/system/routeMeta.ts", "src/lib/system/prerender.ts", "src/lib/system/brand.ts"]) {
+      const src = read(path.join(WEB, file))
+        .split("\n")
+        .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l))
+        .join("\n");
+      expect(src, `${file} imports app code by alias`).not.toMatch(/from "@\//);
+      expect(src, `${file} reads the environment`).not.toMatch(/import\.meta\.env|process\.env/);
+      expect(src, `${file} touches the DOM`).not.toMatch(/\b(document|window|navigator)\b/);
+      expect(src, `${file} reads files or the network`).not.toMatch(/node:fs|readFileSync|fetch\(/);
+    }
+    const prerender = read(path.join(WEB, "src/lib/system/prerender.ts"))
+      .split("\n")
+      .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l)) // the code, not the comments
+      .join("\n");
+    expect(prerender.match(/<script[^>]*>/g)).toEqual(['<script type="application/ld+json">']); // the one tag it writes is a data block
+    expect(prerender).toMatch(/replace\(\/<\/g, "\\\\u003c"\)/); // and no name in the data can close it
+    const cfg = read(path.join(WEB, "vite.config.ts"));
+    expect(cfg).toMatch(/name: "thetraffic:search-pages",\s*apply: "build",\s*enforce: "post"/); // copies of the FINISHED index.html (policy injected)
+    expect(cfg).toMatch(/plugins: \[react\(\), csp\(env\), searchPages\(env\), envHygiene\(env\)\]/); // and the hygiene gate still runs after them
+  });
+
+  it("type-checks both projects for real, with the app project strict", () => {
+    const pkg = JSON.parse(read(path.join(WEB, "package.json"))) as { scripts: Record<string, string> };
+    expect(pkg.scripts.typecheck).toBe("tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json"); // the solution tsconfig has `files: []` and checks nothing by itself
+    const app = JSON.parse(read(path.join(WEB, "tsconfig.app.json"))) as { compilerOptions: Record<string, unknown> };
+    const node = JSON.parse(read(path.join(WEB, "tsconfig.node.json"))) as { compilerOptions: Record<string, unknown> };
+    expect(app.compilerOptions.strict).toBe(true);
+    expect(app.compilerOptions.noImplicitAny).toBeUndefined(); // nothing switches part of strict back off
+    expect(node.compilerOptions.strict).toBe(true);
+  });
+
+  it("keeps the repository's automation supply chain pinned and watched: every action by commit, Dependabot on every manifest, CodeQL with least privilege", () => {
+    const workflows = readdirSync(path.join(ROOT, ".github/workflows")).filter((f) => /\.ya?ml$/.test(f));
+    expect(workflows.sort()).toEqual(["ci.yml", "codeql.yml"]);
+    for (const f of workflows) {
+      const text = read(path.join(ROOT, ".github/workflows", f));
+      for (const use of text.match(/uses:\s*\S+/g) ?? []) expect(use, `${f}: ${use} is not pinned to a commit`).toMatch(/uses:\s*[\w.-]+\/[\w.-]+(?:\/[\w.-]+)*@[0-9a-f]{40}$/);
+      expect(text, `${f} grants more than read at the top level`).toMatch(/^permissions:\n {2}contents: read\n/m);
+      expect(text).not.toMatch(/pull_request_target|secrets\.\w+/); // no fork can run with the repository's secrets; no workflow needs one
+    }
+    const codeql = read(path.join(ROOT, ".github/workflows/codeql.yml"));
+    expect(codeql).toMatch(/security-events: write/); // the one extra grant, on the job that uploads results
+    expect(codeql).toMatch(/language: javascript-typescript[\s\S]*language: python[\s\S]*language: actions/);
+    const dependabot = read(path.join(ROOT, ".github/dependabot.yml"));
+    const covered = [...dependabot.matchAll(/package-ecosystem: "([^"]+)"\n\s+directory: "([^"]+)"/g)].map((m) => `${m[1]} ${m[2]}`).sort();
+    expect(covered).toEqual(["bun /web", "github-actions /", "npm /functions", "pip /"]); // the web app, the Worker, the scripts, the workflows
   });
 
   it("gives the Worker JSON-only headers, grants CORS to named origins only (never `*`), reads exactly the two board settings, and keeps every secret out of source", () => {
@@ -181,8 +249,16 @@ describe("security guard", () => {
     expect(code("functions/index.ts")).toContain("readBodyCapped(request, REQUEST_MAX_BYTES)");
     expect(code("functions/index.ts")).toContain("inspectJpeg(");
     expect(code("functions/_lib/jpeg.ts")).toMatch(/isMetadata/);
+    // the rate-limit verdict is asked of the board before a byte of a submission is read, so a refused caller costs no JPEG parse, photo write or cleanup
+    expect(code("functions/index.ts")).toMatch(/"\/allowance"[\s\S]*readBodyCapped\(request, REQUEST_MAX_BYTES\)[\s\S]*inspectJpeg\(/);
+    expect(code("functions/grievance-board.ts")).toMatch(/private async allowance\([\s\S]*postAllowance\(key, now\)/);
+    // a page of the board is one indexed query plus counts kept in memory, keyed for a short public cache; a post or a removal forgets the pages it changes
+    expect(code("functions/grievance-board.ts")).toContain("cacheControl: LIST_CACHE_CONTROL");
+    expect(code("functions/grievance-board.ts")).not.toMatch(/private list\([\s\S]*COUNT\(\*\)[\s\S]*private item\(/);
+    expect(code("functions/index.ts")).toMatch(/if \(res\.ok\) await forgetPages\(url, parsed\.value\.kind\)/);
+    expect(code("functions/index.ts")).toMatch(/if \(removed\.ok\) await forgetPages\(url, kindFilter\(publicItem\.kind \?\? null\)\)/);
     // a failure no route expected still answers as JSON with the caller's grant — never the platform's bare error page, which a browser may not read
-    expect(code("functions/index.ts")).toMatch(/return await route\(request, env, url, path, grant\);\s*\} catch \(e\) \{[\s\S]*errorResponse\("The board is not answering right now[^"]*", 502, grant/);
+    expect(code("functions/index.ts")).toMatch(/return await route\(request, env, url, path, grant, ctx\);\s*\} catch \(e\) \{[\s\S]*errorResponse\("The board is not answering right now[^"]*", 502, grant/);
     // the moderator passphrase is read from the environment in one place, compared in constant time, and never echoed
     const board = code("functions/grievance-board.ts");
     expect(board.match(/GRIEVANCE_ADMIN_KEY/g)).toHaveLength(2); // the Env type and the one read in authorize()

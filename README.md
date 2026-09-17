@@ -29,7 +29,7 @@ theTraffic. is an open civic-data explorer for Bengaluru's traffic signals, publ
 - **Published timing plans:** Bengaluru Traffic Police sheets made available through OpenCity, parsed into normalized factual records. A plan reaches estimates only after an explicit, committed review decision.
 - **Junction-level estimates:** expected stop probability and delay from a fixed-time plan with an accepted review link. No exact lamp state is claimed when synchronisation is unknown.
 - **Surveillance map:** 2,818 `man_made=surveillance` records from a dated OpenStreetMap snapshot, kept separate from signal data.
-- **Account-free grievance board:** public reports about potholes, footpaths, water logging, crossings, signals, street lights, parking, and encroachment. Posts may contain identifying words, visible image details, coordinates, and times.
+- **Account-free grievance board:** public reports about potholes, footpaths, water logging, crossings, signals, street lights, parking, and encroachment — each with a photo of what is wrong (required), and the place and words when given. Posts may contain identifying words, visible image details, coordinates, and times.
 - **Research and methodology:** provenance, coverage, limitations, model definitions, and reproducible ingestion scripts.
 
 > [!IMPORTANT]
@@ -96,7 +96,7 @@ All settings are optional. The main ones are:
 | Variable | Purpose |
 | --- | --- |
 | `VITE_SUPPORT_EMAIL` | Support-page mailbox |
-| `VITE_GA_MEASUREMENT_ID` | Enables GA4 page views; analytics is off when empty |
+| `VITE_GA_MEASUREMENT_ID` | Enables GA4 page views; Google's counter is off when empty (DataFast needs no value) |
 | `VITE_GRIEVANCE_API_URL` | Overrides the grievance Worker origin |
 | `VITE_SITE_URL` | Canonical public origin and sitemap base |
 | `VITE_MAP_STYLE_URL` | Custom MapLibre style |

@@ -99,11 +99,11 @@ export async function fetchGrievance(id: string, base: string = GRIEVANCE_API): 
   return (await res.json()) as BoardGrievance;
 }
 
-/** Post a grievance: the JSON as one form field, the JPEG (when any) as another. */
-export async function postGrievance(submission: GrievanceSubmission, photo: GrievancePhoto | null, base: string = GRIEVANCE_API): Promise<BoardGrievance> {
+/** Post a grievance: the JSON as one form field, the JPEG as another — every grievance carries one. */
+export async function postGrievance(submission: GrievanceSubmission, photo: GrievancePhoto, base: string = GRIEVANCE_API): Promise<BoardGrievance> {
   const form = new FormData();
   form.set("grievance", JSON.stringify(submission));
-  if (photo) form.set("photo", photo.blob, "photo.jpg");
+  form.set("photo", photo.blob, "photo.jpg");
   const res = await call(`${base}/grievances`, { method: "POST", body: form });
   if (!res.ok) throw await failure(res);
   return (await res.json()) as BoardGrievance;

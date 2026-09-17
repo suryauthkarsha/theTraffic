@@ -13,11 +13,13 @@ export const SECURITY_HEADERS: Readonly<Record<string, string>> = {
 };
 
 /**
- * Exact public origins that may read and write the board. Additional exact https origins come from
+ * Exact public origins that may read and write the board: the site's own domain (`www.thetraffic.in`
+ * is the public host, on Vercel since 2026-09-12; the apex redirects to it), the Rork host it is
+ * published on, and this project's editor preview. Additional exact https origins come from
  * `GRIEVANCE_ALLOWED_ORIGINS` (space or comma separated). Multi-tenant suffix wildcards are rejected.
  * Local development servers are always allowed.
  */
-export const DEFAULT_ORIGINS = new Set(["https://greenwave-bengaluru.rork.app", "https://www.thetraffic.in"]);
+export const DEFAULT_ORIGINS = new Set(["https://www.thetraffic.in", "https://thetraffic.in", "https://greenwave-bengaluru.rork.app", "https://elsklqr8a0l8hi5jfkza7-web.rork.live"]);
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]", "[::]"]);
 
 /** Whether a browser origin may read and write the board. A request without an origin is not a browser's cross-site call. */
@@ -68,7 +70,12 @@ export interface ResponseOptions {
 }
 
 export function jsonResponse(body: unknown, opts: ResponseOptions = {}): Response {
-  return new Response(JSON.stringify(body), {
+  return jsonTextResponse(JSON.stringify(body), opts);
+}
+
+/** A JSON answer already serialized — a memoized page — with exactly the headers `jsonResponse` gives. */
+export function jsonTextResponse(text: string, opts: ResponseOptions = {}): Response {
+  return new Response(text, {
     status: opts.status ?? 200,
     headers: {
       ...SECURITY_HEADERS,

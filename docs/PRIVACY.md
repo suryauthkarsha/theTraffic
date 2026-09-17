@@ -8,7 +8,8 @@ consented-journey design (random research identities, 7-day raw-GPS retention, k
 aggregates, opt-out and delete-my-data) was removed on 2026-09-08 with the Supabase backend and
 survives only as design notes in Methodology §3–§4. The route / departure planner was removed the
 same day, so no place a visitor types or picks on the maps is sent anywhere unless they deliberately
-post it as a grievance. The site measures its own audience with Google Analytics when configured.
+post it as a grievance. The site measures its own audience with DataFast and, when configured, Google
+Analytics — page views only (see Analytics).
 
 ## What leaves the browser
 
@@ -27,8 +28,9 @@ post it as a grievance. The site measures its own audience with Google Analytics
 - **Grievances** (`/grievance` → the public board `/grievances`, 2026-09-11) are the one thing the
   site stores, and the one request that goes to a server of ours (the project's Cloudflare Worker;
   `docs/DEPLOYMENT.md` § The Worker). What is posted is exactly: the kind (pothole, footpath, water,
-  crossing, signal, light, parking, other), the words, the place (a point, how it was set, the nearest
-  junction on file) and the shrunk photo. The form has no identity or contact field, and phone-number
+  crossing, signal, light, parking, other), the shrunk photo — every grievance carries one (user
+  decision 2026-09-13); the board refuses a post without it — and, when given, the words and the place
+  (a point, how it was set, the nearest junction on file). The form has no identity or contact field, and phone-number
   and e-mail patterns are refused in the browser and again on the server. That filter cannot detect
   every name, postal address, face, vehicle plate, house number, or other identifying detail, so the
   person posting must remove those details before submission. The photo comes through the operating system's
@@ -45,6 +47,21 @@ post it as a grievance. The site measures its own audience with Google Analytics
   metadata under its own policies. A grievance can remain public until a
   moderator removes it. Its visible content and coordinates may still reveal who or what it concerns.
   Leaving the form discards an unposted draft, its photo and its place.
+- **The helmet campaign** (`/helmet`, 2026-09-12): nothing. The UPI QR code is drawn in the page from
+  the campaign's payment address; the payment links open the visitor's own UPI app — on Android the one
+  "Pay with a UPI app" link (`upi://pay`, answered by the system's chooser), on iOS one link per app on
+  that app's own scheme (PhonePe, Google Pay, Paytm, CRED, BHIM, or the generic link for another; since
+  2026-09-17, because iOS handed `upi://` to WhatsApp). The page reads the browser's own description of
+  the device to decide which to show, in the page, and sends it nowhere; the amount chips only change
+  the links. The site never learns that a payment was made, how much, or by whom — that stays between
+  the payer's bank and the campaign's.
+- **DataFast** (since 2026-09-13, on every build). For each page opened and each route change DataFast
+  receives the page's address as it stands — path and query string, so a board filter (`?kind=pothole`)
+  or a support topic a link pre-filled travels with it — the address of the page the visitor came
+  from, viewport and screen size, browser, language and time zone, and a random visitor id and
+  session id it keeps in first-party cookies (`datafast_*`). Nothing typed on the site ever enters an
+  address, so nothing typed reaches it. By its own rules it does not run inside an embedded frame or
+  on localhost; by ours it does not run for a browser that sends Global Privacy Control.
 - **Google Analytics 4** (only when the build carries a measurement id — see Analytics). Google
   receives which page was opened and when, its title, the address of the page the visitor came from,
   screen size, browser and language, and derives a coarse location from the network address, which
@@ -64,15 +81,22 @@ repeat the sensitive material in a public issue. There is currently no automatic
 
 ## Analytics
 
-- **Off by default.** Without `VITE_GA_MEASUREMENT_ID` at build time nothing is loaded, nothing is
-  sent, and the Content Security Policy names no Google host.
-- **Page views only.** One `page_view` per screen opened, sent by the site itself once the screen's
-  title is known (`web/src/hooks/usePageTitle.ts`); the tag's automatic page view is off. No custom
-  events, no user ids, no ads or "Google signals" features — their hosts are not in the policy, so
-  such requests would be blocked even if a property setting changed.
-- **Global Privacy Control is honoured.** A browser sending the GPC signal gets no tag at all.
-- **Cookies.** Google Analytics sets its own first-party cookies (`_ga`, `_ga_<id>`) to tell a
-  returning browser from a new one. They hold a random client id, nothing about the person.
+- **Two counters, page views only.** DataFast on every build (`web/src/lib/system/analytics.ts`,
+  `installDataFast`: the pasted snippet's website id and root domain, inserted as a script element);
+  Google Analytics 4 only when `VITE_GA_MEASUREMENT_ID` is set at build time — without it nothing of
+  Google's is loaded or sent and the Content Security Policy names no Google host. DataFast's origin
+  (`https://datafa.st`) is in the policy's `script-src` and `connect-src` on every build.
+- **What each counts.** DataFast counts on its own: one page view on load and one on every route
+  change, with the page address as it stands (path and query string). Google Analytics receives one
+  `page_view` per screen opened, sent by the site itself once the screen's title is known
+  (`web/src/hooks/usePageTitle.ts`), with the path alone — the tag's automatic page view is off. No
+  custom events, no user ids, no ads or "Google signals" features — their hosts are not in the
+  policy, so such requests would be blocked even if a property setting changed.
+- **Global Privacy Control is honoured.** A browser sending the GPC signal gets neither script.
+- **Cookies.** DataFast keeps a random visitor id (a year), a session id (half an hour) and a session
+  count in first-party cookies (`datafast_visitor_id`, `datafast_session_id`, …). Google Analytics
+  sets its own (`_ga`, `_ga_<id>`) to tell a returning browser from a new one. Each holds a random
+  id, nothing about the person.
 - The Support page says this in one sentence (FAQ 4); this file is the long form.
 
 ## What stays in the browser
